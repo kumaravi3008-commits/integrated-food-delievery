@@ -24,9 +24,28 @@ const createRestaurantHandler = async (req, res) => {
 };
 
 const listRestaurantsHandler = async (req, res) => {
-  const restaurants = await listRestaurants();
+  const { search, cuisine, rating } = req.query || {};
+
+  // Validate rating (must be a non-negative number if provided)
+  if (rating !== undefined) {
+    const ratingNum = Number(rating);
+    if (!Number.isFinite(ratingNum) || ratingNum < 0) {
+      return res.status(400).json({ success: false, message: 'Validation error: rating must be a non-negative number' });
+    }
+  }
+
+
+
+
+
+
+
+  const restaurants = await listRestaurants({ search, cuisine, rating });
+
   return res.status(200).json({ success: true, data: restaurants });
 };
+
+
 
 const getRestaurantHandler = async (req, res) => {
   const { restaurantId } = req.params;
