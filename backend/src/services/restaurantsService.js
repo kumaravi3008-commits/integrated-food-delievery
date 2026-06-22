@@ -1,9 +1,17 @@
 const Restaurant = require('../models/Restaurant');
 
-const createRestaurant = async ({ name, address, phone, status }) => {
-  const restaurant = await Restaurant.create({ name, address, phone, status });
+const createRestaurant = async ({ name, address, phone, status, location }) => {
+  const restaurant = await Restaurant.create({
+    name,
+    address,
+    phone,
+    status,
+    // Backwards compatible: location is optional for existing clients.
+    location,
+  });
   return restaurant;
 };
+
 
 const listRestaurants = async (filters = {}) => {
   const { search, cuisine, rating } = filters || {};
@@ -45,11 +53,53 @@ const deleteRestaurant = async (restaurantId) => {
   return deleted;
 };
 
+const nearbyRestaurants = async ({ longitude, latitude, radius }) => {
+  // $geoNear requires a proper 2dsphere index on the geospatial field.
+  // distanceField will be returned on each document.
+  const results = await Restaurant.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: 'Point',
+          coordinates: [longitude, latitude],
+        },
+        distanceField: 'distance',
+        spherical: true,
+        // Mongo expects radius in meters for 2dsphere with GeoJSON.
+        maxDistance: radius,
+      },
+    },
+    {
+      // Return nearest first (already sorted by $geoNear, but keep deterministic)
+      $sort: { distance: 1 },
+    },
+    {
+      $project: {
+        name: 1,
+        address: 1,
+        phone: 1,
+        status: 1,
+        cuisine: 1,
+        rating: 1,
+        location: 1,
+        distance: 1,
+        createdAt: 1,
+        updatedAt: 1,
+      },
+    },
+  ]);
+
+  return results;
+};
+
 module.exports = {
   createRestaurant,
   listRestaurants,
   getRestaurantById,
   updateRestaurant,
   deleteRestaurant,
+  nearbyRestaurants,
 };
+
+
 
