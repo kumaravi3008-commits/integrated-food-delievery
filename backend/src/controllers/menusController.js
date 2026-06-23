@@ -6,6 +6,14 @@ const {
   deleteMenu,
 } = require('../services/menusService');
 
+const isCastError = (err) => {
+  return (
+    err &&
+    (err.name === 'CastError' ||
+      (typeof err.message === 'string' && err.message.toLowerCase().includes('cast to')))
+  );
+};
+
 const createMenuHandler = async (req, res) => {
   const { restaurantId } = req.params;
   const { name, description, items, status } = req.body || {};
@@ -37,23 +45,47 @@ const createMenuHandler = async (req, res) => {
     return res.status(400).json({ success: false, message: 'Validation error: status must be ACTIVE or INACTIVE' });
   }
 
-  const menu = await createMenu({ restaurantId, name, description, items, status });
-  return res.status(201).json({ success: true, data: menu });
+  try {
+    const menu = await createMenu({ restaurantId, name, description, items, status });
+    return res.status(201).json({ success: true, data: menu });
+  } catch (err) {
+    if (isCastError(err)) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    throw err;
+  }
 };
 
 const listMenusByRestaurantHandler = async (req, res) => {
   const { restaurantId } = req.params;
-  const menus = await listMenusByRestaurant(restaurantId);
-  return res.status(200).json({ success: true, data: menus });
+  const { category } = req.query || {};
+
+  try {
+    const menus = await listMenusByRestaurant({ restaurantId, category });
+    return res.status(200).json({ success: true, data: menus });
+  } catch (err) {
+    if (isCastError(err)) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+    throw err;
+  }
 };
 
 const getMenuHandler = async (req, res) => {
   const { menuId } = req.params;
-  const menu = await getMenuById(menuId);
-  if (!menu) {
-    return res.status(404).json({ success: false, message: 'Menu not found' });
+
+  try {
+    const menu = await getMenuById(menuId);
+    if (!menu) {
+      return res.status(404).json({ success: false, message: 'Menu not found' });
+    }
+    return res.status(200).json({ success: true, data: menu });
+  } catch (err) {
+    if (isCastError(err)) {
+      return res.status(404).json({ success: false, message: 'Menu not found' });
+    }
+    throw err;
   }
-  return res.status(200).json({ success: true, data: menu });
 };
 
 const updateMenuHandler = async (req, res) => {
@@ -85,21 +117,36 @@ const updateMenuHandler = async (req, res) => {
     }
   }
 
-  const updated = await updateMenu(menuId, { name, description, items, status });
-  if (!updated) {
-    return res.status(404).json({ success: false, message: 'Menu not found' });
-  }
+  try {
+    const updated = await updateMenu(menuId, { name, description, items, status });
+    if (!updated) {
+      return res.status(404).json({ success: false, message: 'Menu not found' });
+    }
 
-  return res.status(200).json({ success: true, data: updated });
+    return res.status(200).json({ success: true, data: updated });
+  } catch (err) {
+    if (isCastError(err)) {
+      return res.status(404).json({ success: false, message: 'Menu not found' });
+    }
+    throw err;
+  }
 };
 
 const deleteMenuHandler = async (req, res) => {
   const { menuId } = req.params;
-  const deleted = await deleteMenu(menuId);
-  if (!deleted) {
-    return res.status(404).json({ success: false, message: 'Menu not found' });
+
+  try {
+    const deleted = await deleteMenu(menuId);
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: 'Menu not found' });
+    }
+    return res.status(200).json({ success: true, data: { menuId: deleted._id } });
+  } catch (err) {
+    if (isCastError(err)) {
+      return res.status(404).json({ success: false, message: 'Menu not found' });
+    }
+    throw err;
   }
-  return res.status(200).json({ success: true, data: { menuId: deleted._id } });
 };
 
 module.exports = {
@@ -109,4 +156,5 @@ module.exports = {
   updateMenuHandler,
   deleteMenuHandler,
 };
+
 
