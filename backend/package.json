@@ -1,21 +1,33 @@
 {
-  "name": "backend",
+  "name": "integrated-food-delievery",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "type": "commonjs",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumaravi3008-commits/integrated-food-delievery.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kumaravi3008-commits/integrated-food-delievery/issues"
+  },
+  "homepage": "https://github.com/kumaravi3008-commits/integrated-food-delievery#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.7.1"
+    "express-session": "^1.19.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
