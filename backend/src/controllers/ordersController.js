@@ -1,11 +1,34 @@
 const {
   createOrder,
+  createOrderFromCart,
   listOrders,
   getOrderById,
   updateStatus,
 } = require('../services/ordersService');
 
+
+const createOrderFromCartHandler = async (req, res) => {
+  const { customerId, cartId } = req.body || {};
+
+  // Validation
+  if (!customerId) {
+    return res.status(400).json({ success: false, message: 'Validation error: customerId is required' });
+  }
+  if (!cartId) {
+    return res.status(400).json({ success: false, message: 'Validation error: cartId is required' });
+  }
+
+  try {
+    const order = await createOrderFromCart({ customerId, cartId });
+    return res.status(201).json({ success: true, message: 'Order created successfully', data: order });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
+
 const createOrderHandler = async (req, res) => {
+
   const { restaurantId, customer, deliveryAddress, items, payment } = req.body || {};
 
   if (!restaurantId) {
@@ -90,7 +113,9 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
 
 module.exports = {
   createOrderHandler,
+  createOrderFromCartHandler,
   listOrdersHandler,
+
   getOrderHandler,
   acceptOrderHandler: transitionStatusHandler('ACCEPTED'),
   preparingOrderHandler: transitionStatusHandler('PREPARING'),

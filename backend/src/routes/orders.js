@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
   createOrderHandler,
+  createOrderFromCartHandler,
   listOrdersHandler,
   getOrderHandler,
   acceptOrderHandler,
@@ -12,9 +13,13 @@ const {
   cancelledOrderHandler,
 } = require('../controllers/ordersController');
 
+
 const router = express.Router();
 
+router.post('/orders/create', createOrderFromCartHandler);
 router.post('/orders', createOrderHandler);
+
+
 router.get('/orders', listOrdersHandler);
 router.get('/orders/:orderId', getOrderHandler);
 
