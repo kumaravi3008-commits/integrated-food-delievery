@@ -13,15 +13,20 @@ const isValidObjectId = (value) => {
 
 const assertValidObjectId = ({ value, field }) => {
   if (!value || typeof value !== 'string' || !value.trim()) {
-    throw createHttpError(400, `Validation error: ${field} is required`);
+    if (field === 'customerId') throw createHttpError(400, 'Invalid customerId');
+    throw createHttpError(400, `Invalid ${field}`);
   }
 
   if (!isValidObjectId(value.trim())) {
-    throw createHttpError(400, `Validation error: ${field} must be a valid MongoDB ObjectId`);
+    // Required by task: clear message must be exactly "Invalid customerId" for customerId.
+    if (field === 'customerId') throw createHttpError(400, 'Invalid customerId');
+    throw createHttpError(400, `Invalid ${field}`);
   }
+
 
   return value.trim();
 };
+
 
 const assertRequiredNumber = ({ value, field }) => {
   if (value === undefined || value === null) {

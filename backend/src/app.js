@@ -6,8 +6,12 @@ const restaurantsRoutes = require('./routes/restaurants');
 const menusRoutes = require('./routes/menus');
 const ordersRoutes = require('./routes/orders');
 const cartRoutes = require('./routes/cart');
+const checkoutRoutes = require('./routes/checkout');
+const authRoutes = require('./routes/auth');
 
 const app = express();
+
+
 
 // Middlewares
 
@@ -20,6 +24,10 @@ app.use('/api', restaurantsRoutes);
 app.use('/api', menusRoutes);
 app.use('/api', ordersRoutes);
 app.use('/api', cartRoutes);
+app.use('/api', checkoutRoutes);
+app.use('/api', authRoutes);
+
+
 
 // 404
 
