@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
+const authRoutes = require("./routes/authRoutes")
 const healthRoutes = require('./routes/health');
 const restaurantsRoutes = require('./routes/restaurants');
 const menusRoutes = require('./routes/menus');
@@ -20,6 +21,7 @@ app.use('/api', restaurantsRoutes);
 app.use('/api', menusRoutes);
 app.use('/api', ordersRoutes);
 app.use('/api', cartRoutes);
+app.use('/api/auth', authRoutes)
 
 // 404
 
