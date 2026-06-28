@@ -118,13 +118,16 @@ const createOrderFromCart = async ({ customerId, cartId }) => {
 };
 
 
-const listOrders = async () => {
-  return Order.find({}).sort({ createdAt: -1 });
+const listOrders = async (customerId) => {
+  const query = customerId ? { customerId } : {};
+  return Order.find(query).sort({ createdAt: -1 });
 };
 
-const getOrderById = async (orderId) => {
-  return Order.findById(orderId);
+const getOrderById = async (orderId, customerId) => {
+  const query = customerId ? { _id: orderId, customerId } : { _id: orderId };
+  return Order.findOne(query);
 };
+
 
 const updateStatus = async (orderId, nextStatus, payload = {}) => {
   const order = await Order.findById(orderId);

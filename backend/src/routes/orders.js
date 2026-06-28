@@ -13,22 +13,55 @@ const {
   cancelledOrderHandler,
 } = require('../controllers/ordersController');
 
+const { requireAuth } = require('../middleware/authMiddleware');
+const { permitRoles } = require('../middleware/rbac');
 
 const router = express.Router();
 
-router.post('/orders/create', createOrderFromCartHandler);
-router.post('/orders', createOrderHandler);
+router.post('/orders/create', requireAuth, createOrderFromCartHandler);
+router.post('/orders', requireAuth, createOrderHandler);
 
+router.get('/orders', requireAuth, listOrdersHandler);
+router.get('/orders/:orderId', requireAuth, getOrderHandler);
 
-router.get('/orders', listOrdersHandler);
-router.get('/orders/:orderId', getOrderHandler);
-
-router.patch('/orders/:orderId/status/ACCEPTED', acceptOrderHandler);
-router.patch('/orders/:orderId/status/PREPARING', preparingOrderHandler);
-router.patch('/orders/:orderId/status/COURIER_ASSIGNED', courierAssignedOrderHandler);
-router.patch('/orders/:orderId/status/PICKED_UP', pickedUpOrderHandler);
-router.patch('/orders/:orderId/status/DELIVERED', deliveredOrderHandler);
-router.patch('/orders/:orderId/status/CANCELLED', cancelledOrderHandler);
+// Courier-only status transitions
+router.patch(
+  '/orders/:orderId/status/ACCEPTED',
+  requireAuth,
+  permitRoles('courier'),
+  acceptOrderHandler
+);
+router.patch(
+  '/orders/:orderId/status/PREPARING',
+  requireAuth,
+  permitRoles('courier'),
+  preparingOrderHandler
+);
+router.patch(
+  '/orders/:orderId/status/COURIER_ASSIGNED',
+  requireAuth,
+  permitRoles('courier'),
+  courierAssignedOrderHandler
+);
+router.patch(
+  '/orders/:orderId/status/PICKED_UP',
+  requireAuth,
+  permitRoles('courier'),
+  pickedUpOrderHandler
+);
+router.patch(
+  '/orders/:orderId/status/DELIVERED',
+  requireAuth,
+  permitRoles('courier'),
+  deliveredOrderHandler
+);
+router.patch(
+  '/orders/:orderId/status/CANCELLED',
+  requireAuth,
+  permitRoles('courier'),
+  cancelledOrderHandler
+);
 
 module.exports = router;
+
 

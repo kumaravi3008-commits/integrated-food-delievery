@@ -13,11 +13,13 @@ const {
 
 const addItemHandler = async (req, res) => {
   try {
-    const { customerId, menuItemId, name, quantity, unitPrice } = req.body || {};
+    const { menuItemId, name, quantity, unitPrice } = req.body || {};
 
+    const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
     const safeMenuItemId = assertValidObjectId({ value: menuItemId, field: 'menuItemId' });
     const safeName = assertRequiredNonEmptyString({ value: name, field: 'name' });
+
 
     // unitPrice validation: needed because cart denormalizes this field.
     if (unitPrice === undefined || typeof unitPrice !== 'number' || Number.isNaN(unitPrice) || unitPrice < 0) {
@@ -44,10 +46,11 @@ const addItemHandler = async (req, res) => {
 const removeItemHandler = async (req, res) => {
   try {
     const { menuItemId } = req.params;
-    const { customerId } = req.body || {};
 
+    const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
     const safeMenuItemId = assertValidObjectId({ value: menuItemId, field: 'menuItemId' });
+
 
     const cart = await removeItemFromCart({
       customerId: safeCustomerId,
@@ -64,9 +67,11 @@ const removeItemHandler = async (req, res) => {
 const updateQuantityHandler = async (req, res) => {
   try {
     const { menuItemId } = req.params;
-    const { customerId, quantity } = req.body || {};
+    const { quantity } = req.body || {};
 
+    const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
+
     const safeMenuItemId = assertValidObjectId({ value: menuItemId, field: 'menuItemId' });
     const safeQuantity = assertQuantity(quantity);
 
@@ -85,8 +90,9 @@ const updateQuantityHandler = async (req, res) => {
 
 const getCartHandler = async (req, res) => {
   try {
-    const { customerId } = req.params;
+    const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
+
 
     const cart = await getCartByCustomerId(safeCustomerId);
     if (!cart) {

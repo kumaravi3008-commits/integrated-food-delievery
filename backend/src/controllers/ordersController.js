@@ -8,7 +8,9 @@ const {
 
 
 const createOrderFromCartHandler = async (req, res) => {
-  const { customerId, cartId } = req.body || {};
+  const { cartId } = req.body || {};
+  const customerId = req.user?.userId;
+
 
   // Validation
   if (!customerId) {
@@ -80,18 +82,19 @@ const createOrderHandler = async (req, res) => {
 };
 
 const listOrdersHandler = async (req, res) => {
-  const orders = await listOrders();
+  const orders = await listOrders(req.user?.userId);
   return res.status(200).json({ success: true, data: orders });
 };
 
 const getOrderHandler = async (req, res) => {
   const { orderId } = req.params;
-  const order = await getOrderById(orderId);
+  const order = await getOrderById(orderId, req.user?.userId);
   if (!order) {
     return res.status(404).json({ success: false, message: 'Order not found' });
   }
   return res.status(200).json({ success: true, data: order });
 };
+
 
 const transitionStatusHandler = (nextStatus) => async (req, res) => {
   const { orderId } = req.params;
@@ -99,6 +102,7 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
   try {
     const payload = nextStatus === 'COURIER_ASSIGNED' ? req.body || {} : {};
     const updated = await updateStatus(orderId, nextStatus, payload);
+
 
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Order not found' });

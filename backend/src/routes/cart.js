@@ -7,19 +7,22 @@ const {
   getCartHandler,
 } = require('../controllers/cartController');
 
+const { requireAuth } = require('../middleware/authMiddleware');
+
 const router = express.Router();
 
 // Add item to cart
-router.post('/cart/add', addItemHandler);
+router.post('/cart/add', requireAuth, addItemHandler);
 
 // Update item quantity in cart
-router.put('/cart/update/:menuItemId', updateQuantityHandler);
+router.put('/cart/update/:menuItemId', requireAuth, updateQuantityHandler);
 
 // Remove an item from cart
-router.delete('/cart/remove/:menuItemId', removeItemHandler);
+router.delete('/cart/remove/:menuItemId', requireAuth, removeItemHandler);
 
-// Get cart by customerId
-router.get('/cart/:customerId', getCartHandler);
+// Get cart (customerId param is ignored; cart is bound to JWT)
+router.get('/cart/:customerId', requireAuth, getCartHandler);
 
 module.exports = router;
+
 
