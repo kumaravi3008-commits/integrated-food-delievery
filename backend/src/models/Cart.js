@@ -4,6 +4,7 @@ const CartSchema = new mongoose.Schema(
   {
     // Until authentication is added, we identify a user's cart by customerId.
     customerId: { type: String, required: true, trim: true },
+    restaurantId: { type: String, trim: true, default: null },
 
     items: [
       {

@@ -42,7 +42,7 @@ const loginHandler = async (req, res) => {
 
     const result = await authService.login({ email: email.trim().toLowerCase(), password });
 
-    return res.status(200).json({ success: true, message: 'Login successful', data: result });
+    return res.status(200).json({ success: true, data: { token: result.token } });
   } catch (err) {
     const statusCode = err?.statusCode || 500;
     return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
@@ -63,9 +63,33 @@ const profileHandler = async (req, res) => {
   }
 };
 
+const resetPasswordHandler = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body || {};
+
+    if (!email || typeof email !== 'string' || !email.trim()) {
+      return res.status(400).json({ success: false, message: 'Email is required' });
+    }
+    if (!newPassword || typeof newPassword !== 'string' || newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
+    }
+
+    const result = await authService.resetPassword({
+      email: email.trim().toLowerCase(),
+      newPassword,
+    });
+
+    return res.status(200).json({ success: true, message: result.message, data: result });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   registerHandler,
   loginHandler,
   profileHandler,
+  resetPasswordHandler,
 };
 

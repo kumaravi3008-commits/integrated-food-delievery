@@ -38,13 +38,13 @@ const assertRequiredNumber = ({ value, field }) => {
   return value;
 };
 
-const assertQuantity = (quantity) => {
+const assertQuantity = (quantity, { allowZero = false } = {}) => {
   assertRequiredNumber({ value: quantity, field: 'quantity' });
 
   if (!Number.isInteger(quantity)) {
     throw createHttpError(400, 'Validation error: quantity must be an integer');
   }
-  if (quantity <= 0) {
+  if (quantity < 0 || (!allowZero && quantity === 0)) {
     throw createHttpError(400, 'Validation error: quantity must be greater than 0');
   }
 

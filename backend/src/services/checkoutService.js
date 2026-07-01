@@ -29,13 +29,19 @@ const getCartRestaurantConsistency = async (cart) => {
   // cart restaurant consistency must be validated at checkout time based on latest menu docs.
   if (!cart?.items?.length) return null;
 
-
   const menuItemIds = cart.items.map((i) => i.menuItemId);
 
-  // In this codebase, Cart.menuItemId corresponds to Menu document _id.
-  const menus = await Menu.find({ _id: { $in: menuItemIds } }).select({ restaurantId: 1 });
+  const menus = await Menu.find({ 'items._id': { $in: menuItemIds } }).select({ restaurantId: 1, items: 1 });
 
-  const idToRestaurantId = new Map(menus.map((m) => [m._id.toString(), m.restaurantId?.toString()]));
+  const idToRestaurantId = new Map();
+  menus.forEach((menu) => {
+    if (!Array.isArray(menu.items)) return;
+    menu.items.forEach((item) => {
+      if (item?._id) {
+        idToRestaurantId.set(item._id.toString(), menu.restaurantId?.toString());
+      }
+    });
+  });
 
   const restaurantIdsInCart = cart.items
     .map((i) => idToRestaurantId.get(i.menuItemId))
@@ -46,16 +52,10 @@ const getCartRestaurantConsistency = async (cart) => {
 };
 
 const getLatestMenuPriceForCartItem = async ({ menuItemId, cartItemName }) => {
-  const menuDoc = await Menu.findById(menuItemId).select({ restaurantId: 1, name: 1, items: 1 });
-  if (!menuDoc) return null;
+  const menuDoc = await Menu.findOne({ 'items._id': menuItemId }).select({ restaurantId: 1, items: 1 });
+  if (!menuDoc || !Array.isArray(menuDoc.items)) return null;
 
-  // Cart stores display name in `cartItem.name`, but menu item names are inside Menu.items[].name.
-  // We'll prefer matching by cartItemName; fallback to first item price if mismatch.
-  const priceItem =
-    (Array.isArray(menuDoc.items) &&
-      menuDoc.items.find((it) => typeof it.name === 'string' && it.name === cartItemName)) ||
-    (Array.isArray(menuDoc.items) ? menuDoc.items[0] : null);
-
+  const priceItem = menuDoc.items.find((it) => it._id?.toString() === menuItemId);
   if (!priceItem || typeof priceItem.price !== 'number') return null;
 
   return {

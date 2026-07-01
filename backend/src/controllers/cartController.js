@@ -7,33 +7,19 @@ const {
 
 const {
   assertValidObjectId,
-  assertQuantity,
-  assertRequiredNonEmptyString,
 } = require('../utils/validation');
 
 const addItemHandler = async (req, res) => {
   try {
-    const { menuItemId, name, quantity, unitPrice } = req.body || {};
+    const { menuItemId, quantity } = req.validatedCartBody || {};
 
     const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
-    const safeMenuItemId = assertValidObjectId({ value: menuItemId, field: 'menuItemId' });
-    const safeName = assertRequiredNonEmptyString({ value: name, field: 'name' });
-
-
-    // unitPrice validation: needed because cart denormalizes this field.
-    if (unitPrice === undefined || typeof unitPrice !== 'number' || Number.isNaN(unitPrice) || unitPrice < 0) {
-      return res.status(400).json({ success: false, message: 'Validation error: unitPrice must be a number >= 0' });
-    }
-
-    const safeQuantity = assertQuantity(quantity);
 
     const cart = await addItemToCart({
       customerId: safeCustomerId,
-      menuItemId: safeMenuItemId,
-      name: safeName,
-      quantity: safeQuantity,
-      unitPrice,
+      menuItemId,
+      quantity,
     });
 
     return res.status(201).json({ success: true, message: 'Item added to cart', data: cart });
@@ -45,16 +31,14 @@ const addItemHandler = async (req, res) => {
 
 const removeItemHandler = async (req, res) => {
   try {
-    const { menuItemId } = req.params;
+    const { menuItemId } = req.validatedCartParams || {};
 
     const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
-    const safeMenuItemId = assertValidObjectId({ value: menuItemId, field: 'menuItemId' });
-
 
     const cart = await removeItemFromCart({
       customerId: safeCustomerId,
-      menuItemId: safeMenuItemId,
+      menuItemId,
     });
 
     return res.status(200).json({ success: true, message: 'Item removed from cart', data: cart });
@@ -66,19 +50,16 @@ const removeItemHandler = async (req, res) => {
 
 const updateQuantityHandler = async (req, res) => {
   try {
-    const { menuItemId } = req.params;
-    const { quantity } = req.body || {};
+    const { menuItemId } = req.validatedCartParams || {};
+    const { quantity } = req.validatedCartBody || {};
 
     const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
 
-    const safeMenuItemId = assertValidObjectId({ value: menuItemId, field: 'menuItemId' });
-    const safeQuantity = assertQuantity(quantity);
-
     const cart = await updateItemQuantity({
       customerId: safeCustomerId,
-      menuItemId: safeMenuItemId,
-      quantity: safeQuantity,
+      menuItemId,
+      quantity,
     });
 
     return res.status(200).json({ success: true, message: 'Cart updated', data: cart });
