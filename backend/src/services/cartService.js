@@ -48,6 +48,10 @@ const addItemToCart = async ({ customerId, menuItemId, quantity }) => {
 
   const { restaurantId, name, unitPrice } = menuItemDetails;
 
+  if (cart?.items?.length && cart.restaurantId && cart.restaurantId !== restaurantId) {
+    throw createCartValidationError(400, 'Cart can contain items from only one restaurant');
+  }
+
   if (!cart) {
     return await Cart.create({
       customerId,
