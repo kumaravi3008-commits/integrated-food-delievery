@@ -3,37 +3,39 @@ const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 
+const VALID_STATUSES = ['PLACED', 'ACCEPTED', 'PREPARING', 'OUT_FOR_DELIVERY', 'DELIVERED'];
 
 const allowedTransitions = {
-  PLACED: ['ACCEPTED', 'CANCELLED'],
-  ACCEPTED: ['PREPARING', 'CANCELLED'],
-  PREPARING: ['COURIER_ASSIGNED', 'CANCELLED'],
-  COURIER_ASSIGNED: ['PICKED_UP'],
-  PICKED_UP: ['DELIVERED'],
+  PLACED: ['ACCEPTED'],
+  ACCEPTED: ['PREPARING'],
+  PREPARING: ['OUT_FOR_DELIVERY'],
+  OUT_FOR_DELIVERY: ['DELIVERED'],
   DELIVERED: [],
-  CANCELLED: [],
 };
 
 const statusTimestampField = {
-
   PLACED: 'placedAt',
   ACCEPTED: 'acceptedAt',
   PREPARING: 'preparingAt',
-  COURIER_ASSIGNED: 'courierAssignedAt',
-  PICKED_UP: 'pickedUpAt',
+  OUT_FOR_DELIVERY: 'outForDeliveryAt',
   DELIVERED: 'deliveredAt',
-  CANCELLED: 'cancelledAt',
 };
 
-const createOrder = async ({ restaurantId, customer, deliveryAddress, items, payment }) => {
+const createOrder = async ({ customerId, restaurantId, customer, deliveryAddress, items, payment }) => {
   const now = new Date();
+  const { totalItems, subtotal, grandTotal } = computeTotals(items);
   const order = await Order.create({
+    customerId,
     restaurantId,
     customer,
     deliveryAddress,
     items,
     payment,
+    totalItems,
+    subtotal,
+    grandTotal,
     status: 'PLACED',
+    orderStatus: 'PLACED',
     timestamps: { placedAt: now },
   });
 
@@ -110,8 +112,9 @@ const createOrderFromCart = async ({ customerId, cartId }) => {
     totalItems,
     subtotal,
     grandTotal,
-    orderStatus: 'PENDING',
-    createdAt: new Date(),
+    status: 'PLACED',
+    orderStatus: 'PLACED',
+    timestamps: { placedAt: new Date() },
   });
 
   return order;
@@ -130,6 +133,18 @@ const getOrderById = async (orderId, customerId) => {
 
 
 const updateStatus = async (orderId, nextStatus, payload = {}) => {
+  if (!VALID_STATUSES.includes(nextStatus)) {
+    const err = new Error('Requested status is invalid');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    const err = new Error('Invalid orderId');
+    err.statusCode = 400;
+    throw err;
+  }
+
   const order = await Order.findById(orderId);
   if (!order) return null;
 
@@ -137,28 +152,19 @@ const updateStatus = async (orderId, nextStatus, payload = {}) => {
   const allowed = allowedTransitions[currentStatus] || [];
 
   if (!allowed.includes(nextStatus)) {
-    const err = new Error(`Invalid status transition from ${currentStatus} to ${nextStatus}`);
-    err.statusCode = 409;
+    const err = new Error('Invalid order status transition.');
+    err.statusCode = 400;
     throw err;
   }
 
   const tsField = statusTimestampField[nextStatus];
-  const update = { status: nextStatus };
+  const update = {
+    status: nextStatus,
+    orderStatus: nextStatus,
+  };
+
   if (tsField) {
     update[`timestamps.${tsField}`] = new Date();
-  }
-
-  if (nextStatus === 'COURIER_ASSIGNED') {
-    const courier = payload.courier || {};
-    update.courier = {
-      courierId: courier.courierId ?? null,
-      name: courier.name ?? null,
-      phone: courier.phone ?? null,
-    };
-  }
-
-  if (nextStatus === 'CANCELLED') {
-    update.courier = { courierId: null, name: null, phone: null };
   }
 
   const updated = await Order.findByIdAndUpdate(orderId, update, { new: true });

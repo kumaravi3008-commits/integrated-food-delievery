@@ -9,6 +9,7 @@ const {
   preparingOrderHandler,
   courierAssignedOrderHandler,
   pickedUpOrderHandler,
+  outForDeliveryOrderHandler,
   deliveredOrderHandler,
   cancelledOrderHandler,
 } = require('../controllers/ordersController');
@@ -24,19 +25,35 @@ router.post('/orders', requireAuth, createOrderHandler);
 router.get('/orders', requireAuth, listOrdersHandler);
 router.get('/orders/:orderId', requireAuth, getOrderHandler);
 
-// Courier-only status transitions
+// Restaurant owner transitions
 router.patch(
   '/orders/:orderId/status/ACCEPTED',
   requireAuth,
-  permitRoles('courier'),
+  permitRoles('restaurant_owner'),
   acceptOrderHandler
 );
 router.patch(
   '/orders/:orderId/status/PREPARING',
   requireAuth,
-  permitRoles('courier'),
+  permitRoles('restaurant_owner'),
   preparingOrderHandler
 );
+
+// Courier transitions
+router.patch(
+  '/orders/:orderId/status/OUT_FOR_DELIVERY',
+  requireAuth,
+  permitRoles('courier'),
+  outForDeliveryOrderHandler
+);
+router.patch(
+  '/orders/:orderId/status/DELIVERED',
+  requireAuth,
+  permitRoles('courier'),
+  deliveredOrderHandler
+);
+
+// Deprecated / unsupported transitions remain protected but will reject on validation
 router.patch(
   '/orders/:orderId/status/COURIER_ASSIGNED',
   requireAuth,
@@ -48,12 +65,6 @@ router.patch(
   requireAuth,
   permitRoles('courier'),
   pickedUpOrderHandler
-);
-router.patch(
-  '/orders/:orderId/status/DELIVERED',
-  requireAuth,
-  permitRoles('courier'),
-  deliveredOrderHandler
 );
 router.patch(
   '/orders/:orderId/status/CANCELLED',

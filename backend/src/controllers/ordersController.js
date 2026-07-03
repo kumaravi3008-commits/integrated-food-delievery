@@ -30,8 +30,12 @@ const createOrderFromCartHandler = async (req, res) => {
 };
 
 const createOrderHandler = async (req, res) => {
-
+  const customerId = req.user?.userId;
   const { restaurantId, customer, deliveryAddress, items, payment } = req.body || {};
+
+  if (!customerId) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
 
   if (!restaurantId) {
     return res.status(400).json({ success: false, message: 'Validation error: restaurantId is required' });
@@ -77,7 +81,7 @@ const createOrderHandler = async (req, res) => {
     return res.status(400).json({ success: false, message: 'Validation error: payment.amount must be >= 0' });
   }
 
-  const order = await createOrder({ restaurantId, customer, deliveryAddress, items, payment });
+  const order = await createOrder({ customerId, restaurantId, customer, deliveryAddress, items, payment });
   return res.status(201).json({ success: true, data: order });
 };
 
@@ -119,12 +123,12 @@ module.exports = {
   createOrderHandler,
   createOrderFromCartHandler,
   listOrdersHandler,
-
   getOrderHandler,
   acceptOrderHandler: transitionStatusHandler('ACCEPTED'),
   preparingOrderHandler: transitionStatusHandler('PREPARING'),
   courierAssignedOrderHandler: transitionStatusHandler('COURIER_ASSIGNED'),
   pickedUpOrderHandler: transitionStatusHandler('PICKED_UP'),
+  outForDeliveryOrderHandler: transitionStatusHandler('OUT_FOR_DELIVERY'),
   deliveredOrderHandler: transitionStatusHandler('DELIVERED'),
   cancelledOrderHandler: transitionStatusHandler('CANCELLED'),
 };
