@@ -28,6 +28,7 @@ const createRestaurantHandler = async (req, res) => {
     phone: phone ?? null,
     status,
     location,
+    ownerId: req.user?.userId || null,
   });
 
   return res.status(201).json({ success: true, data: restaurant });

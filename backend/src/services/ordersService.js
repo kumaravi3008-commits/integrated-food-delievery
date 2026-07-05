@@ -2,8 +2,18 @@ const mongoose = require('mongoose');
 
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
+const Restaurant = require('../models/Restaurant');
 
-const VALID_STATUSES = ['PLACED', 'ACCEPTED', 'PREPARING', 'OUT_FOR_DELIVERY', 'DELIVERED'];
+const VALID_STATUSES = [
+  'PLACED',
+  'ACCEPTED',
+  'PREPARING',
+  'OUT_FOR_DELIVERY',
+  'DELIVERED',
+  'COURIER_ASSIGNED',
+  'PICKED_UP',
+  'CANCELLED',
+];
 
 const allowedTransitions = {
   PLACED: ['ACCEPTED'],
@@ -18,7 +28,15 @@ const statusTimestampField = {
   ACCEPTED: 'acceptedAt',
   PREPARING: 'preparingAt',
   OUT_FOR_DELIVERY: 'outForDeliveryAt',
+  COURIER_ASSIGNED: 'courierAssignedAt',
+  PICKED_UP: 'pickedUpAt',
   DELIVERED: 'deliveredAt',
+  CANCELLED: 'cancelledAt',
+};
+
+const roleAllowedStatuses = {
+  restaurant_owner: ['ACCEPTED', 'PREPARING'],
+  courier: ['OUT_FOR_DELIVERY', 'DELIVERED'],
 };
 
 const createOrder = async ({ customerId, restaurantId, customer, deliveryAddress, items, payment }) => {
@@ -70,7 +88,6 @@ const createOrderFromCart = async ({ customerId, cartId }) => {
     throw err;
   }
 
-
   if (typeof cartId !== 'string' || !mongoose.Types.ObjectId.isValid(cartId)) {
     const err = new Error('Validation error: cartId must be a valid MongoDB ObjectId');
     err.statusCode = 400;
@@ -84,7 +101,6 @@ const createOrderFromCart = async ({ customerId, cartId }) => {
     throw err;
   }
 
-  // Optional safety: ensure cart belongs to the customer requesting order.
   if (cart.customerId !== customerId) {
     const err = new Error('Cart does not belong to the customer');
     err.statusCode = 403;
@@ -108,6 +124,7 @@ const createOrderFromCart = async ({ customerId, cartId }) => {
 
   const order = await Order.create({
     customerId,
+    restaurantId: cart.restaurantId || undefined,
     items: itemSnapshot,
     totalItems,
     subtotal,
@@ -117,22 +134,45 @@ const createOrderFromCart = async ({ customerId, cartId }) => {
     timestamps: { placedAt: new Date() },
   });
 
+  await Cart.findByIdAndUpdate(cartId, { $set: { items: [], restaurantId: null } }, { new: true });
+
   return order;
 };
-
 
 const listOrders = async (customerId) => {
   const query = customerId ? { customerId } : {};
   return Order.find(query).sort({ createdAt: -1 });
 };
 
+const listRestaurantOrders = async (restaurantId) => {
+  if (!mongoose.Types.ObjectId.isValid(restaurantId)) {
+    const err = new Error('Invalid restaurantId');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const restaurant = await Restaurant.findById(restaurantId);
+  if (!restaurant) {
+    const err = new Error('Restaurant not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return Order.find({ restaurantId }).sort({ createdAt: -1 });
+};
+
 const getOrderById = async (orderId, customerId) => {
+  if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    const err = new Error('Invalid orderId');
+    err.statusCode = 400;
+    throw err;
+  }
+
   const query = customerId ? { _id: orderId, customerId } : { _id: orderId };
   return Order.findOne(query);
 };
 
-
-const updateStatus = async (orderId, nextStatus, payload = {}) => {
+const updateStatus = async (orderId, nextStatus, payload = {}, actingRole = null) => {
   if (!VALID_STATUSES.includes(nextStatus)) {
     const err = new Error('Requested status is invalid');
     err.statusCode = 400;
@@ -142,6 +182,12 @@ const updateStatus = async (orderId, nextStatus, payload = {}) => {
   if (!mongoose.Types.ObjectId.isValid(orderId)) {
     const err = new Error('Invalid orderId');
     err.statusCode = 400;
+    throw err;
+  }
+
+  if (actingRole && roleAllowedStatuses[actingRole] && !roleAllowedStatuses[actingRole].includes(nextStatus)) {
+    const err = new Error('You are not authorized to perform this status transition.');
+    err.statusCode = 403;
     throw err;
   }
 
@@ -167,6 +213,10 @@ const updateStatus = async (orderId, nextStatus, payload = {}) => {
     update[`timestamps.${tsField}`] = new Date();
   }
 
+  if (nextStatus === 'COURIER_ASSIGNED' && payload?.courier) {
+    update.courier = payload.courier;
+  }
+
   const updated = await Order.findByIdAndUpdate(orderId, update, { new: true });
   return updated;
 };
@@ -175,8 +225,8 @@ module.exports = {
   createOrder,
   createOrderFromCart,
   listOrders,
+  listRestaurantOrders,
   getOrderById,
   updateStatus,
 };
-
 

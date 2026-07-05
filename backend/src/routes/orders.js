@@ -4,6 +4,7 @@ const {
   createOrderHandler,
   createOrderFromCartHandler,
   listOrdersHandler,
+  listRestaurantOrdersHandler,
   getOrderHandler,
   acceptOrderHandler,
   preparingOrderHandler,
@@ -23,6 +24,7 @@ router.post('/orders/create', requireAuth, createOrderFromCartHandler);
 router.post('/orders', requireAuth, createOrderHandler);
 
 router.get('/orders', requireAuth, listOrdersHandler);
+router.get('/restaurants/:restaurantId/orders', requireAuth, permitRoles('restaurant_owner'), listRestaurantOrdersHandler);
 router.get('/orders/:orderId', requireAuth, getOrderHandler);
 
 // Restaurant owner transitions

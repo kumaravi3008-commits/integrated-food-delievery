@@ -6,6 +6,7 @@ const RestaurantSchema = new mongoose.Schema(
     address: { type: String, required: true, trim: true },
     phone: { type: String, trim: true, default: null },
     status: { type: String, enum: ['ACTIVE', 'INACTIVE'], default: 'ACTIVE' },
+    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false, default: null },
 
     // Search & filtering support
     cuisine: { type: String, trim: true, default: null },

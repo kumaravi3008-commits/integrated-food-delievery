@@ -1,20 +1,21 @@
+const mongoose = require('mongoose');
+
 const {
   createOrder,
   createOrderFromCart,
   listOrders,
+  listRestaurantOrders,
   getOrderById,
   updateStatus,
 } = require('../services/ordersService');
-
+const { getRestaurantById } = require('../services/restaurantsService');
 
 const createOrderFromCartHandler = async (req, res) => {
   const { cartId } = req.body || {};
   const customerId = req.user?.userId;
 
-
-  // Validation
   if (!customerId) {
-    return res.status(400).json({ success: false, message: 'Validation error: customerId is required' });
+    return res.status(401).json({ success: false, message: 'Authentication required' });
   }
   if (!cartId) {
     return res.status(400).json({ success: false, message: 'Validation error: cartId is required' });
@@ -81,32 +82,82 @@ const createOrderHandler = async (req, res) => {
     return res.status(400).json({ success: false, message: 'Validation error: payment.amount must be >= 0' });
   }
 
-  const order = await createOrder({ customerId, restaurantId, customer, deliveryAddress, items, payment });
-  return res.status(201).json({ success: true, data: order });
+  try {
+    const order = await createOrder({ customerId, restaurantId, customer, deliveryAddress, items, payment });
+    return res.status(201).json({ success: true, data: order });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
 };
 
 const listOrdersHandler = async (req, res) => {
-  const orders = await listOrders(req.user?.userId);
+  if (!req.user?.userId) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
+
+  const orders = await listOrders(req.user.userId);
   return res.status(200).json({ success: true, data: orders });
+};
+
+const listRestaurantOrdersHandler = async (req, res) => {
+  const { restaurantId } = req.params;
+  const customerId = req.user?.userId;
+
+  if (!customerId) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
+  if (!restaurantId || !mongoose.Types.ObjectId.isValid(restaurantId)) {
+    return res.status(400).json({ success: false, message: 'Validation error: restaurantId must be a valid ObjectId' });
+  }
+
+  try {
+    const restaurant = await getRestaurantById(restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ success: false, message: 'Restaurant not found' });
+    }
+
+    if (restaurant.ownerId && restaurant.ownerId.toString() !== customerId) {
+      return res.status(403).json({ success: false, message: 'You are not authorized to view this restaurant orders' });
+    }
+
+    const orders = await listRestaurantOrders(restaurantId);
+    return res.status(200).json({ success: true, data: orders });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
 };
 
 const getOrderHandler = async (req, res) => {
   const { orderId } = req.params;
-  const order = await getOrderById(orderId, req.user?.userId);
-  if (!order) {
-    return res.status(404).json({ success: false, message: 'Order not found' });
-  }
-  return res.status(200).json({ success: true, data: order });
-};
 
+  if (!req.user?.userId) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
+
+  if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
+    return res.status(400).json({ success: false, message: 'Validation error: orderId must be a valid ObjectId' });
+  }
+
+  try {
+    const order = await getOrderById(orderId, req.user.userId);
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+    return res.status(200).json({ success: true, data: order });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
 
 const transitionStatusHandler = (nextStatus) => async (req, res) => {
   const { orderId } = req.params;
 
   try {
     const payload = nextStatus === 'COURIER_ASSIGNED' ? req.body || {} : {};
-    const updated = await updateStatus(orderId, nextStatus, payload);
-
+    const updated = await updateStatus(orderId, nextStatus, payload, req.user?.role);
 
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Order not found' });
@@ -123,6 +174,7 @@ module.exports = {
   createOrderHandler,
   createOrderFromCartHandler,
   listOrdersHandler,
+  listRestaurantOrdersHandler,
   getOrderHandler,
   acceptOrderHandler: transitionStatusHandler('ACCEPTED'),
   preparingOrderHandler: transitionStatusHandler('PREPARING'),
