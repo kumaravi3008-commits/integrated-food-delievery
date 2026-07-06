@@ -2,14 +2,8 @@ const mongoose = require('mongoose');
 
 const OrderSchema = new mongoose.Schema(
   {
-    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true },
-
-    customer: {
-      name: { type: String, required: true, trim: true },
-      phone: { type: String, required: true, trim: true },
-    },
-
-    deliveryAddress: { type: String, required: true, trim: true },
+    // Day 8 required fields
+    customerId: { type: String, required: true, trim: true },
 
     items: [
       {
@@ -20,14 +14,32 @@ const OrderSchema = new mongoose.Schema(
       },
     ],
 
+    totalItems: { type: Number, required: true, min: 0 },
+    subtotal: { type: Number, required: true, min: 0 },
+    grandTotal: { type: Number, required: true, min: 0 },
+
+    orderStatus: { type: String, required: true, default: 'PENDING', trim: true },
+
+    createdAt: { type: Date, required: true, default: Date.now },
+
+    // Existing fields from earlier days (kept for compatibility)
+    restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: false },
+
+    customer: {
+      name: { type: String, required: false, trim: true },
+      phone: { type: String, required: false, trim: true },
+    },
+
+    deliveryAddress: { type: String, required: false, trim: true },
+
     payment: {
-      method: { type: String, required: true, enum: ['CASH', 'CARD', 'ONLINE'] },
-      amount: { type: Number, required: true, min: 0 },
+      method: { type: String, required: false, enum: ['CASH', 'CARD', 'ONLINE'] },
+      amount: { type: Number, required: false, min: 0 },
     },
 
     status: {
       type: String,
-      required: true,
+      required: false,
       enum: [
         'PLACED',
         'ACCEPTED',
@@ -56,10 +68,13 @@ const OrderSchema = new mongoose.Schema(
       cancelledAt: { type: Date, default: null },
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Order = mongoose.model('Order', OrderSchema);
 
 module.exports = Order;
+
 

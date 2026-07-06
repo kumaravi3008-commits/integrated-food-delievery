@@ -53,10 +53,16 @@ const deleteRestaurant = async (restaurantId) => {
   return deleted;
 };
 
-const nearbyRestaurants = async ({ longitude, latitude, radius }) => {
+const nearbyRestaurants = async ({
+  longitude,
+  latitude,
+  radius,
+  cuisine,
+  rating
+}) => {
   // $geoNear requires a proper 2dsphere index on the geospatial field.
   // distanceField will be returned on each document.
-  const results = await Restaurant.aggregate([
+  const pipeline = [
     {
       $geoNear: {
         near: {
@@ -69,9 +75,33 @@ const nearbyRestaurants = async ({ longitude, latitude, radius }) => {
         maxDistance: radius,
       },
     },
+  ];
+
+  if (cuisine !== undefined && cuisine !== null && typeof cuisine === 'string' && cuisine.trim()) {
+    // Case-insensitive match (applied after $geoNear)
+    pipeline.push({
+      $match: {
+        cuisine: { $regex: `^${cuisine.trim()}$`, $options: 'i' },
+      },
+    });
+  }
+
+  if (rating !== undefined && rating !== null) {
+    const ratingNum = Number(rating);
+    if (Number.isFinite(ratingNum)) {
+      // Minimum rating filter (applied after $geoNear)
+      pipeline.push({
+        $match: {
+          rating: { $gte: ratingNum },
+        },
+      });
+    }
+  }
+
+  pipeline.push(
     {
-      // Return nearest first (already sorted by $geoNear, but keep deterministic)
-      $sort: { distance: 1 },
+      // Sort by distance (asc) and rating (desc)
+      $sort: { distance: 1, rating: -1 },
     },
     {
       $project: {
@@ -86,8 +116,11 @@ const nearbyRestaurants = async ({ longitude, latitude, radius }) => {
         createdAt: 1,
         updatedAt: 1,
       },
-    },
-  ]);
+    }
+  );
+
+  const results = await Restaurant.aggregate(pipeline);
+
 
   return results;
 };

@@ -6,9 +6,10 @@ const healthRoutes = require('./routes/health');
 const restaurantsRoutes = require('./routes/restaurants');
 const menusRoutes = require('./routes/menus');
 const ordersRoutes = require('./routes/orders');
-const cartRoutes = require('./routes/cart');
 
 const app = express();
+
+
 
 // Middlewares
 
@@ -20,8 +21,6 @@ app.use('/api', healthRoutes);
 app.use('/api', restaurantsRoutes);
 app.use('/api', menusRoutes);
 app.use('/api', ordersRoutes);
-app.use('/api', cartRoutes);
-app.use('/api/auth', authRoutes)
 
 // 404
 

@@ -1,4 +1,8 @@
+const mongoose = require('mongoose');
+
 const Order = require('../models/Order');
+const Cart = require('../models/Cart');
+
 
 const allowedTransitions = {
   PLACED: ['ACCEPTED', 'CANCELLED'],
@@ -11,6 +15,7 @@ const allowedTransitions = {
 };
 
 const statusTimestampField = {
+
   PLACED: 'placedAt',
   ACCEPTED: 'acceptedAt',
   PREPARING: 'preparingAt',
@@ -35,13 +40,94 @@ const createOrder = async ({ restaurantId, customer, deliveryAddress, items, pay
   return order;
 };
 
-const listOrders = async () => {
-  return Order.find({}).sort({ createdAt: -1 });
+const computeTotals = (items) => {
+  let totalItems = 0;
+  let subtotal = 0;
+
+  for (const item of items) {
+    const quantity = Number(item.quantity) || 0;
+    const unitPrice = Number(item.unitPrice) || 0;
+
+    totalItems += quantity;
+    subtotal += quantity * unitPrice;
+  }
+
+  const grandTotal = subtotal;
+  return { totalItems, subtotal, grandTotal };
 };
 
-const getOrderById = async (orderId) => {
-  return Order.findById(orderId);
+const createOrderFromCart = async ({ customerId, cartId }) => {
+  if (!customerId) {
+    const err = new Error('Validation error: customerId is required');
+    err.statusCode = 400;
+    throw err;
+  }
+  if (!cartId) {
+    const err = new Error('Validation error: cartId is required');
+    err.statusCode = 400;
+    throw err;
+  }
+
+
+  if (typeof cartId !== 'string' || !mongoose.Types.ObjectId.isValid(cartId)) {
+    const err = new Error('Validation error: cartId must be a valid MongoDB ObjectId');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const cart = await Cart.findById(cartId);
+  if (!cart) {
+    const err = new Error('Cart not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+  // Optional safety: ensure cart belongs to the customer requesting order.
+  if (cart.customerId !== customerId) {
+    const err = new Error('Cart does not belong to the customer');
+    err.statusCode = 403;
+    throw err;
+  }
+
+  if (!cart.items || cart.items.length === 0) {
+    const err = new Error('Cart must contain items');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const itemSnapshot = cart.items.map((ci) => ({
+    menuItemId: ci.menuItemId,
+    name: ci.name,
+    quantity: ci.quantity,
+    unitPrice: ci.unitPrice,
+  }));
+
+  const { totalItems, subtotal, grandTotal } = computeTotals(itemSnapshot);
+
+  const order = await Order.create({
+    customerId,
+    items: itemSnapshot,
+    totalItems,
+    subtotal,
+    grandTotal,
+    orderStatus: 'PENDING',
+    createdAt: new Date(),
+  });
+
+  return order;
 };
+
+
+const listOrders = async (customerId) => {
+  const query = customerId ? { customerId } : {};
+  return Order.find(query).sort({ createdAt: -1 });
+};
+
+const getOrderById = async (orderId, customerId) => {
+  const query = customerId ? { _id: orderId, customerId } : { _id: orderId };
+  return Order.findOne(query);
+};
+
 
 const updateStatus = async (orderId, nextStatus, payload = {}) => {
   const order = await Order.findById(orderId);
@@ -81,8 +167,10 @@ const updateStatus = async (orderId, nextStatus, payload = {}) => {
 
 module.exports = {
   createOrder,
+  createOrderFromCart,
   listOrders,
   getOrderById,
   updateStatus,
 };
+
 

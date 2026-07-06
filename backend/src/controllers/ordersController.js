@@ -1,11 +1,36 @@
 const {
   createOrder,
+  createOrderFromCart,
   listOrders,
   getOrderById,
   updateStatus,
 } = require('../services/ordersService');
 
+
+const createOrderFromCartHandler = async (req, res) => {
+  const { cartId } = req.body || {};
+  const customerId = req.user?.userId;
+
+
+  // Validation
+  if (!customerId) {
+    return res.status(400).json({ success: false, message: 'Validation error: customerId is required' });
+  }
+  if (!cartId) {
+    return res.status(400).json({ success: false, message: 'Validation error: cartId is required' });
+  }
+
+  try {
+    const order = await createOrderFromCart({ customerId, cartId });
+    return res.status(201).json({ success: true, message: 'Order created successfully', data: order });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
+
 const createOrderHandler = async (req, res) => {
+
   const { restaurantId, customer, deliveryAddress, items, payment } = req.body || {};
 
   if (!restaurantId) {
@@ -57,18 +82,19 @@ const createOrderHandler = async (req, res) => {
 };
 
 const listOrdersHandler = async (req, res) => {
-  const orders = await listOrders();
+  const orders = await listOrders(req.user?.userId);
   return res.status(200).json({ success: true, data: orders });
 };
 
 const getOrderHandler = async (req, res) => {
   const { orderId } = req.params;
-  const order = await getOrderById(orderId);
+  const order = await getOrderById(orderId, req.user?.userId);
   if (!order) {
     return res.status(404).json({ success: false, message: 'Order not found' });
   }
   return res.status(200).json({ success: true, data: order });
 };
+
 
 const transitionStatusHandler = (nextStatus) => async (req, res) => {
   const { orderId } = req.params;
@@ -76,6 +102,7 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
   try {
     const payload = nextStatus === 'COURIER_ASSIGNED' ? req.body || {} : {};
     const updated = await updateStatus(orderId, nextStatus, payload);
+
 
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Order not found' });
@@ -90,7 +117,9 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
 
 module.exports = {
   createOrderHandler,
+  createOrderFromCartHandler,
   listOrdersHandler,
+
   getOrderHandler,
   acceptOrderHandler: transitionStatusHandler('ACCEPTED'),
   preparingOrderHandler: transitionStatusHandler('PREPARING'),

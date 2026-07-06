@@ -5,6 +5,9 @@ const CartSchema = new mongoose.Schema(
     // Until authentication is added, we identify a user's cart by customerId.
     customerId: { type: String, required: true, trim: true },
 
+    // Optional: allow carts scoped to a restaurant.
+    restaurantId: { type: String, trim: true, default: null },
+
     items: [
       {
         menuItemId: { type: String, required: true, trim: true },
@@ -20,4 +23,5 @@ const CartSchema = new mongoose.Schema(
 CartSchema.index({ customerId: 1 }, { unique: true });
 
 module.exports = mongoose.model('Cart', CartSchema);
+
 
