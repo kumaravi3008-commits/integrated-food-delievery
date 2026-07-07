@@ -1,5 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+
+    appPlaceholder: (state = {}) => state
+  },
 });
+
+export default store;
