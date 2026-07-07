@@ -1,6 +1,5 @@
-- [x] Inspect Hero component and identify spacing/alignment issues
-- [x] Implement alignment fixes for left hero text (ensure consistent vertical spacing and no cramped lines)
-- [x] Increase space between tagline and action buttons
-- [ ] Run frontend formatting/lint check (if available) and verify build
-
+# TODO
+- [x] Resolve backend merge conflict in `backend/src/controllers/cartController.js` (delete the incorrect branch; keep the `req.user?.userId` version).
+- [ ] Re-check `backend/` for any remaining `<<<<<<<`, `=======`, `>>>>>>>` markers (ripgrep tool not available).
+- [ ] Start/verify backend to ensure it runs without syntax errors.
 
