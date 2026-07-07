@@ -1,14 +1,6 @@
-# TODO.md
-
-- [x] Inspect Restaurant routes/controllers/services/models for existing search/filter support
-- [x] Implement Restaurant schema fields: `cuisine` (String) and `rating` (Number)
-- [x] Implement GET /api/restaurants query params:
-  - [x] `search` (case-insensitive on `name`)
-  - [x] `cuisine` (case-insensitive exact match)
-  - [x] `rating` (numeric validation; filter by `rating >= value`)
-  - [x] Combine filters using AND logic via a single Mongo query
-- [x] Validate rating input (must be non-negative number)
-- [x] Update Postman collection with new example requests (optional)
-- [x] Provide final report with files changed, testing instructions, and commit message
+- [x] Inspect Hero component and identify spacing/alignment issues
+- [x] Implement alignment fixes for left hero text (ensure consistent vertical spacing and no cramped lines)
+- [x] Increase space between tagline and action buttons
+- [ ] Run frontend formatting/lint check (if available) and verify build
 
 
