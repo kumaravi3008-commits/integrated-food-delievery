@@ -17,18 +17,17 @@ const Navbar = () => {
       </div>
 
       {/* Action Icons */}
-      <div className="flex items-center gap-4 text-white">
+      <div className="flex items-center gap-6 text-white">
 
         <Search size={20} className="cursor-pointer hover:text-orange-500 transition-colors" />
         <div className="relative cursor-pointer group">
           <ShoppingBag size={20} className="group-hover:text-orange-500 transition-colors" />
-          <span className="absolute -top-2 -right-2 bg-orange-600 text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+          <span className="absolute -top-2 -right-2 bg-orange-600 text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
         </div>
 
-        {/* Login Button */}
-        <button className="ml-2 px-4 py-2 rounded-xl bg-white/10 border border-white/15 hover:bg-white/15 text-white text-[11px] font-bold uppercase tracking-[0.2em] transition-colors">
-          Login
-        </button>
+      <button className="-ml-2 min-w-[90px] h-9 rounded-xl bg-white/10 border border-white/15 hover:bg-white/15 text-white text-[10px] font-semibold uppercase tracking-[0.1em] transition-colors flex items-center justify-center px-4">
+  Login
+</button>
 
       </div>
     </nav>
