@@ -53,15 +53,23 @@ const Home = () => {
             </p>
 
             {/* Glassmorphic Search Entry Bar */}
-            <div className="relative flex items-center w-full group bg-white/[0.02] backdrop-blur-xl border border-white/10 p-2 rounded-full shadow-2xl">
-              <MapPin className="absolute left-5 text-[#D33F0F]" size={20} />
+            <div className="relative flex items-center w-full max-w-xl mx-auto group bg-white/[0.03] backdrop-blur-xl border border-white/10 p-1.5 rounded-full shadow-2xl mt-6">
+              {/* Location Icon on the left side with clear spacing */}
+              <MapPin
+                className="absolute left-4 text-[#D33F0F] pointer-events-none"
+                size={18}
+              />
+
+              {/* Input field with generous left padding (pl-12) to prevent text collision */}
               <input
                 type="text"
                 placeholder="Enter delivery address"
-                className="w-full pl-12 pr-36 py-3.5 rounded-full bg-transparent text-white placeholder-gray-500 font-medium focus:outline-none text-sm"
+                className="w-full bg-transparent text-white placeholder-gray-500 font-medium focus:outline-none text-sm pl-12 pr-36 py-3 rounded-full"
               />
-              <button className="absolute right-2 bg-[#D33F0F] hover:bg-[#B32D06] text-white px-5 py-2.5 rounded-full font-bold flex items-center gap-1.5 text-xs uppercase tracking-wider transition-all shrink-0">
-                Find Food <Zap size={14} fill="white" />
+
+              {/* Downsized compact button perfectly aligned to the right inside edge */}
+              <button className="absolute right-1.5 bg-[#D33F0F] hover:bg-[#B32D06] text-white px-4 py-2 rounded-full font-bold flex items-center gap-1 text-[11px] uppercase tracking-wider transition-all shrink-0 shadow-md">
+                Find Food <Zap size={12} fill="white" />
               </button>
             </div>
           </div>
@@ -75,13 +83,12 @@ const Home = () => {
                 className="w-full object-cover h-[380px] md:h-[420px] lg:h-[460px] hover:scale-105 transition-transform duration-700"
               />
             </div>
-            
           </div>
         </div>
       </section>
 
       {/* CATEGORIES SECTION */}
-      <section className="w-full bg-[#0a0a0a] border-y border-white/5 py-12 px-6 flex justify-center">
+      <section className="w-full bg-[#1a1a1a] border-y border-white/5 py-12 px-6 flex justify-center">
         <div className="w-full max-w-7xl flex flex-col items-center">
           <h3 className="text-lg font-bold mb-8 text-neutral-400 uppercase tracking-widest text-center w-full">
             Popular Categories
@@ -113,11 +120,11 @@ const Home = () => {
       </section>
 
       {/* RESTAURANTS SECTION */}
-      <section className="w-full bg-white py-16 px-6 flex justify-center">
+      <section className="w-full bg-[#1a1a1a] py-16 px-6 flex justify-center">
         <div className="w-full max-w-7xl">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12 text-center sm:text-left">
             <div>
-              <h3 className="text-3xl font-extrabold text-black tracking-tight">
+              <h3 className="text-3xl font-extrabold text-white tracking-tight">
                 Best of the Week
               </h3>
               <p className="text-gray-500 text-sm mt-1">
@@ -158,7 +165,7 @@ const Home = () => {
       </section>
 
       {/* FEATURES SECTION */}
-      <section className="w-full bg-neutral-50 border-t border-gray-100 py-16 px-6 flex justify-center">
+      <section className="w-full bg-[#1a1a1a] border-t border-gray-100 py-16 px-6 flex justify-center">
         <div className="w-full max-w-7xl grid md:grid-cols-3 gap-12 text-center">
           <Feature
             icon={<MousePointer2 />}
@@ -189,7 +196,7 @@ const Home = () => {
 
 // Internal Sub-Components
 const RestaurantCard = ({ name, rating, tags, time, img }) => (
-  <div className="bg-white rounded-[2rem] overflow-hidden group cursor-pointer border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 w-full max-w-md mx-auto">
+  <div className="bg-[#333333] rounded-[2rem] overflow-hidden group cursor-pointer border shadow-sm hover:shadow-xl transition-all duration-300 w-full max-w-md mx-auto">
     <div className="relative h-56 overflow-hidden">
       <img
         src={img}
@@ -222,7 +229,7 @@ const Feature = ({ icon, title, desc, color, text }) => (
     >
       {React.cloneElement(icon, { size: 22 })}
     </div>
-    <h4 className="font-bold text-lg mb-2 text-black">{title}</h4>
+    <h4 className="font-bold text-lg mb-2 text-white">{title}</h4>
     <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
   </div>
 );
