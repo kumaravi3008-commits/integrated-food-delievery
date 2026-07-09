@@ -36,43 +36,40 @@ const Home = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-900/10 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="w-full grid md:grid-cols-2 gap-12 lg:gap-16 items-center justify-items-center relative z-10">
+          
           {/* LEFT HEADER CONTENT Block */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left w-full max-w-xl">
             <h2 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] mb-6 tracking-tight text-white">
-              DineExpresses <br /> delivered at <br />
+              DineExpress <br /> delivered at <br />
               <span className="text-[#D33F0F] italic font-serif">
                 warp speed.
               </span>
             </h2>
 
-            {/* Glassmorphic Description */}
+            {/* Separated Pin Badge, Input Field, and Button with Perfect Global Alignment */}
+            <div className="flex flex-row items-center gap-3 w-full max-w-md mx-auto md:mx-0 mt-6">
+              
+              {/* Standalone Map Pin Badge */}
+              <div className="flex items-center justify-center bg-white/[0.03] backdrop-blur-xl border border-white/10 p-3 rounded-full shadow-2xl shrink-0">
+                <MapPin className="text-[#D33F0F]" size={16} />
+              </div>
 
-            <p className="text-center md:text-center text-neutral-400 font-serif italic tracking-normal text-base md:text-lg leading-loose max-w-lg mx-auto opacity-90">
-              Experience the next generation of culinary logistics. From local
-              favorites to Michelin-starred delights.
-            </p>
+              {/* Standalone Clean Address Input Field */}
+              <div className="relative flex-1 flex items-center bg-white/[0.03] backdrop-blur-xl border border-white/10 px-4 py-2 rounded-full shadow-2xl">
+                <input
+                  type="text"
+                  placeholder="Enter delivery address"
+                  className="w-full bg-transparent text-white placeholder-gray-500 font-medium focus:outline-none text-xs py-1.5"
+                />
+              </div>
 
-            {/* Glassmorphic Search Entry Bar */}
-            <div className="relative flex items-center w-full max-w-xl mx-auto group bg-white/[0.03] backdrop-blur-xl border border-white/10 p-1.5 rounded-full shadow-2xl mt-6">
-              {/* Location Icon on the left side with clear spacing */}
-              <MapPin
-                className="absolute left-4 text-[#D33F0F] pointer-events-none"
-                size={18}
-              />
-
-              {/* Input field with generous left padding (pl-12) to prevent text collision */}
-              <input
-                type="text"
-                placeholder="Enter delivery address"
-                className="w-full bg-transparent text-white placeholder-gray-500 font-medium focus:outline-none text-sm pl-12 pr-36 py-3 rounded-full"
-              />
-
-              {/* Downsized compact button perfectly aligned to the right inside edge */}
-              <button className="absolute right-1.5 bg-[#D33F0F] hover:bg-[#B32D06] text-white px-4 py-2 rounded-full font-bold flex items-center gap-1 text-[11px] uppercase tracking-wider transition-all shrink-0 shadow-md">
-                Find Food <Zap size={12} fill="white" />
+              {/* Standalone Action Button */}
+              <button className="bg-[#D33F0F] hover:bg-[#B32D06] text-white px-5 py-3 rounded-full font-bold flex items-center gap-1.5 text-[10px] uppercase tracking-wider transition-all shrink-0 shadow-lg self-stretch">
+                Find Food <Zap size={11} fill="white" />
               </button>
+              
             </div>
-          </div>
+          </div> {/* <--- Fixed: Added missing closing tag for LEFT HEADER CONTENT Block */}
 
           {/* RIGHT ANIMATED HERO IMAGE FRAME */}
           <div className="relative w-full max-w-md flex justify-center items-center">
@@ -84,6 +81,7 @@ const Home = () => {
               />
             </div>
           </div>
+
         </div>
       </section>
 
@@ -165,28 +163,28 @@ const Home = () => {
       </section>
 
       {/* FEATURES SECTION */}
-      <section className="w-full bg-[#1a1a1a] border-t border-gray-100 py-16 px-6 flex justify-center">
+      <section className="w-full bg-[#1a1a1a] border-t border-white/5 py-16 px-6 flex justify-center">
         <div className="w-full max-w-7xl grid md:grid-cols-3 gap-12 text-center">
           <Feature
             icon={<MousePointer2 />}
             title="One-Tap Order"
             desc="Our smart prediction engine remembers your favorites for a frictionless checkout experience."
-            color="bg-orange-50"
-            text="text-orange-600"
+            color="bg-orange-950/20"
+            text="text-orange-500"
           />
           <Feature
             icon={<Zap />}
             title="Warp Speed Delivery"
             desc="Real-time logistics optimization ensures your meal travels the shortest route in record time."
-            color="bg-orange-50"
-            text="text-orange-600"
+            color="bg-orange-950/20"
+            text="text-orange-500"
           />
           <Feature
             icon={<CheckCircle />}
             title="Guaranteed Fresh"
             desc="Exclusive heat-map packaging keeps every dish at its peak temperature until the moment you eat."
-            color="bg-green-50"
-            text="text-green-600"
+            color="bg-green-950/20"
+            text="text-green-500"
           />
         </div>
       </section>
@@ -196,7 +194,7 @@ const Home = () => {
 
 // Internal Sub-Components
 const RestaurantCard = ({ name, rating, tags, time, img }) => (
-  <div className="bg-[#333333] rounded-[2rem] overflow-hidden group cursor-pointer border shadow-sm hover:shadow-xl transition-all duration-300 w-full max-w-md mx-auto">
+  <div className="bg-[#141414] rounded-[2rem] overflow-hidden group cursor-pointer border border-white/5 shadow-sm hover:shadow-xl transition-all duration-300 w-full max-w-md mx-auto">
     <div className="relative h-56 overflow-hidden">
       <img
         src={img}
@@ -208,12 +206,12 @@ const RestaurantCard = ({ name, rating, tags, time, img }) => (
       </div>
     </div>
     <div className="p-6 text-left">
-      <h4 className="text-lg font-bold mb-1.5 text-black group-hover:text-[#D33F0F] transition-colors">
+      <h4 className="text-lg font-bold mb-1.5 text-white group-hover:text-[#D33F0F] transition-colors">
         {name}
       </h4>
       <div className="flex items-center gap-2.5 text-gray-400 text-[11px] font-bold uppercase tracking-wider">
         <span>{tags}</span>
-        <span className="w-1 h-1 bg-gray-300 rounded-full" />
+        <span className="w-1 h-1 bg-gray-500 rounded-full" />
         <span className="flex items-center gap-1">
           <Clock size={12} /> {time}
         </span>
@@ -225,12 +223,12 @@ const RestaurantCard = ({ name, rating, tags, time, img }) => (
 const Feature = ({ icon, title, desc, color, text }) => (
   <div className="flex flex-col items-center max-w-xs mx-auto">
     <div
-      className={`w-12 h-12 ${color} ${text} rounded-2xl flex items-center justify-center mb-4 shadow-sm`}
+      className={`w-12 h-12 ${color} ${text} rounded-2xl flex items-center justify-center mb-4 shadow-sm border border-white/5`}
     >
       {React.cloneElement(icon, { size: 22 })}
     </div>
     <h4 className="font-bold text-lg mb-2 text-white">{title}</h4>
-    <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
+    <p className="text-neutral-400 text-sm leading-relaxed">{desc}</p>
   </div>
 );
 
