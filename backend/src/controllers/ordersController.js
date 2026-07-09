@@ -9,6 +9,7 @@ const {
   updateStatus,
 } = require('../services/ordersService');
 const { getRestaurantById } = require('../services/restaurantsService');
+const { emitOrderUpdate, eventNameForStatus } = require('../services/orderTrackingService');
 
 const createOrderFromCartHandler = async (req, res) => {
   const { cartId } = req.body || {};
@@ -23,6 +24,7 @@ const createOrderFromCartHandler = async (req, res) => {
 
   try {
     const order = await createOrderFromCart({ customerId, cartId });
+    emitOrderUpdate('ORDER_PLACED', order);
     return res.status(201).json({ success: true, message: 'Order created successfully', data: order });
   } catch (err) {
     const statusCode = err?.statusCode || 500;
@@ -161,6 +163,11 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
 
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    const eventName = eventNameForStatus(nextStatus);
+    if (eventName) {
+      emitOrderUpdate(eventName, updated);
     }
 
     return res.status(200).json({ success: true, data: updated });
