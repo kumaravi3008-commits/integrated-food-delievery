@@ -3,11 +3,11 @@ import { ArrowRight, Utensils } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen bg-[#050505] flex items-center overflow-hidden pt-20">
+    <section className="relative min-h-screen bg-[#050505] flex items-center overflow-hidden py-24">
       {/* Background Glow */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[650px] h-[650px] bg-orange-600/10 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="max-w-[1500px] w-full mx-auto px-8 lg:px-20 grid lg:grid-cols-[55%_45%] items-center gap-16 relative z-10">
+      <div className="max-w-[1500px] w-full mx-auto px-8 lg:px-24 grid lg:grid-cols-[55%_45%] items-center gap-24 relative z-10">
         {/* LEFT CONTENT */}
         <div className="max-w-[700px] flex flex-col justify-center">
           {/* Badge */}
@@ -18,17 +18,17 @@ const Hero = () => {
 
           {/* Heading */}
           <div className="mt-10">
-            <h1 className="text-5xl lg:text-[74px] font-semibold text-white leading-tight">
+            <h1 className="text-5xl lg:text-[74px] font-semibold text-white leading-[1.05]">
               Welcome to
             </h1>
 
-            <h2 className="mt-3 text-6xl lg:text-[88px] font-bold text-[#e65100] leading-tight">
+            <h2 className="mt-6 text-6xl lg:text-[88px] font-bold text-[#e65100] leading-[1.05]">
               DineExpress
             </h2>
           </div>
 
           {/* TAGLINE & BUTTONS CONTAINER */}
-          <div className="flex flex-col gap-10 mt-10">
+          <div className="flex flex-col gap-12 mt-10">
             <div className="flex flex-wrap items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.22em] text-gray-500">
               <span>Discover</span>
               <span className="text-orange-600">•</span>
@@ -37,7 +37,7 @@ const Hero = () => {
               <span>Deliver</span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6">
+            <div className="flex flex-wrap items-center gap-8">
               <Link
                 to="/home"
                 className="min-w-[190px] h-12 rounded-full bg-[#b23c00] hover:bg-[#d94e00] text-white text-sm font-bold uppercase tracking-[0.08em] whitespace-nowrap transition-colors flex items-center justify-center gap-3 px-8 shadow-xl shadow-orange-900/20"
@@ -56,7 +56,7 @@ const Hero = () => {
           </div>
 
           {/* Stats */}
-          <div className="flex justify-between max-w-[620px] mt-24 pt-10 border-t border-white/10">
+          <div className="flex justify-between max-w-[680px] mt-28 pt-12 border-t border-white/10">
             {[
               { value: "500+", label: "Restaurants" },
               { value: "20min", label: "Avg Delivery" },
@@ -73,12 +73,12 @@ const Hero = () => {
         </div>
 
         {/* RIGHT CONTENT */}
-        <div className="relative h-[620px] hidden lg:block pl-10">
+        <div className="relative h-[760px] hidden lg:block pl-16">
           {/* Glow */}
           <div className="absolute -top-10 left-12 w-80 h-80 bg-orange-600/10 blur-3xl rounded-full" />
 
           {/* Burger */}
-          <div className="absolute top-0 left-0 w-72 h-[450px] rounded-[40px] overflow-hidden border-[6px] border-[#3d3d3d] shadow-2xl z-30">
+          <div className="absolute top-0 left-0 w-80 h-[520px] rounded-[40px] overflow-hidden border-[6px] border-[#3d3d3d] shadow-2xl z-30">
             <img
               src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800"
               alt="Burger"
@@ -87,7 +87,7 @@ const Hero = () => {
           </div>
 
           {/* Ramen */}
-          <div className="absolute top-16 right-0 w-80 h-64 rounded-[32px] overflow-hidden border-[6px] border-[#3d3d3d] shadow-2xl rotate-2 z-20">
+          <div className="absolute top-20 right-0 w-96 h-[380px] rounded-[32px] overflow-hidden border-[6px] border-[#3d3d3d] shadow-2xl rotate-2 z-20">
             <img
               src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=800"
               alt="Ramen"
@@ -96,7 +96,7 @@ const Hero = () => {
           </div>
 
           {/* Sushi */}
-          <div className="absolute bottom-0 left-20 w-80 h-64 rounded-[32px] overflow-hidden border-[6px] border-[#3d3d3d] shadow-2xl -rotate-2 z-10">
+          <div className="absolute bottom-0 left-24 w-96 h-[380px] rounded-[32px] overflow-hidden border-[6px] border-[#3d3d3d] shadow-2xl -rotate-2 z-10">
             <img
               src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=800"
               alt="Sushi"
