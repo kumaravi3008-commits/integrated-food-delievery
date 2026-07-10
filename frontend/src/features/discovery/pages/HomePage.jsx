@@ -16,7 +16,8 @@ import {
   Award,
   Utensils,
 } from "lucide-react";
-
+import Navbar from  '../../../components/layout/Navbar/Navbar'
+import Footer from '../../../components/layout/Footer/Footer'
 // --- PRODUCTION MOCK DATA STRUCTURES ---
 const CUISINES = [
   { id: 1, name: "Pizza", icon: "🍕" },
@@ -139,6 +140,8 @@ export default function DineExpressHomePage() {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="bg-[#0A0A0A] text-white min-h-screen overflow-x-hidden font-sans selection:bg-[#D33F0F] selection:text-white antialiased">
       {/* 1. HERO SECTION */}
       <section
@@ -642,45 +645,8 @@ export default function DineExpressHomePage() {
           </div>
         </div>
       </section>
-
-      {/* 8. PREMIUM NEWSLETTER SIGNUP */}
-      <section className="py-16 bg-[#111111] border-t border-[#2A2A2A]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-1 text-center md:text-left">
-              <h3 className="text-lg font-bold text-white">
-                Join the Gourmet Inner Circle
-              </h3>
-              <p className="text-xs text-[#A3A3A3]">
-                Get weekly curation lists, secret codes, and priority host
-                bookings.
-              </p>
-            </div>
-            <div className="flex gap-2 w-full md:w-auto max-w-md">
-              <input
-                type="email"
-                placeholder="Your email address..."
-                className="bg-[#0A0A0A] border border-[#2A2A2A] px-4 py-2.5 rounded-xl text-xs outline-none text-white w-full focus:border-[#D33F0F] transition-colors"
-              />
-              <button className="bg-[#D33F0F] hover:bg-[#FF6B35] text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shrink-0">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 9. COMPREHENSIVE FOOTER */}
-      <footer className="bg-[#0A0A0A] py-12 border-t border-[#111111] text-xs text-[#A3A3A3]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-base font-black text-white tracking-tight">
-              DineExpress
-            </span>
-          </div>
-          <p>© 2026 DineExpress Architecture Inc. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
+    </>
   );
 }
