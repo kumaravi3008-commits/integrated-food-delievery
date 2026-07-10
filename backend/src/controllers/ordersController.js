@@ -7,6 +7,9 @@ const {
   listRestaurantOrders,
   getOrderById,
   updateStatus,
+  assignCourierToOrder,
+  listCourierAssignedOrders,
+  getAssignedOrderById,
 } = require('../services/ordersService');
 const { getRestaurantById } = require('../services/restaurantsService');
 const { emitOrderUpdate, eventNameForStatus } = require('../services/orderTrackingService');
@@ -159,7 +162,8 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
 
   try {
     const payload = nextStatus === 'COURIER_ASSIGNED' ? req.body || {} : {};
-    const updated = await updateStatus(orderId, nextStatus, payload, req.user?.role);
+    const updated = await updateStatus(orderId, nextStatus, payload, req.user?.role, req.user?.userId);
+
 
     if (!updated) {
       return res.status(404).json({ success: false, message: 'Order not found' });
@@ -171,6 +175,76 @@ const transitionStatusHandler = (nextStatus) => async (req, res) => {
     }
 
     return res.status(200).json({ success: true, data: updated });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
+
+const assignCourierToOrderHandler = async (req, res) => {
+  const { orderId, courier } = req.body || {};
+  const courierId = courier?.courierId || req.body?.courierId;
+
+  if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
+    return res.status(400).json({ success: false, message: 'Validation error: orderId must be a valid ObjectId' });
+  }
+
+  if (!courierId) {
+    return res.status(400).json({ success: false, message: 'Validation error: courierId is required' });
+  }
+
+  if (!courier || !courier.name || !courier.phone) {
+    return res.status(400).json({ success: false, message: 'Validation error: courier.name and courier.phone are required' });
+  }
+
+  try {
+    const updated = await assignCourierToOrder({ orderId, courierId, courier });
+    if (!updated) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    return res.status(200).json({ success: true, data: updated });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
+
+const listAssignedOrdersHandler = async (req, res) => {
+  const courierId = req.user?.userId;
+
+  if (!courierId) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
+
+  try {
+    const orders = await listCourierAssignedOrders(courierId);
+    return res.status(200).json({ success: true, data: orders });
+  } catch (err) {
+    const statusCode = err?.statusCode || 500;
+    return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
+  }
+};
+
+const getAssignedOrderHandler = async (req, res) => {
+  const courierId = req.user?.userId;
+  const { orderId } = req.params;
+
+  if (!courierId) {
+    return res.status(401).json({ success: false, message: 'Authentication required' });
+  }
+
+  if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
+    return res.status(400).json({ success: false, message: 'Validation error: orderId must be a valid ObjectId' });
+  }
+
+  try {
+    const order = await getAssignedOrderById(orderId, courierId);
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    return res.status(200).json({ success: true, data: order });
   } catch (err) {
     const statusCode = err?.statusCode || 500;
     return res.status(statusCode).json({ success: false, message: err?.message || 'Internal Server Error' });
@@ -190,5 +264,12 @@ module.exports = {
   outForDeliveryOrderHandler: transitionStatusHandler('OUT_FOR_DELIVERY'),
   deliveredOrderHandler: transitionStatusHandler('DELIVERED'),
   cancelledOrderHandler: transitionStatusHandler('CANCELLED'),
+  assignCourierToOrderHandler,
+  listAssignedOrdersHandler,
+  getAssignedOrderHandler,
 };
+
+
+
+
 

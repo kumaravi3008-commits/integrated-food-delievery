@@ -4,6 +4,8 @@ const assert = require('node:assert/strict');
 const ordersService = require('../src/services/ordersService');
 const Order = require('../src/models/Order');
 const Cart = require('../src/models/Cart');
+const User = require('../src/models/User');
+
 
 test('createOrderFromCart creates an order from the cart and clears the cart', async () => {
   const originalCartFindById = Cart.findById;

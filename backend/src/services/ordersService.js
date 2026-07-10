@@ -172,7 +172,91 @@ const getOrderById = async (orderId, customerId) => {
   return Order.findOne(query);
 };
 
-const updateStatus = async (orderId, nextStatus, payload = {}, actingRole = null) => {
+const listCourierAssignedOrders = async (courierId) => {
+  if (!mongoose.Types.ObjectId.isValid(courierId)) {
+    const err = new Error('Invalid courierId');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  return Order.find({ 'courier.courierId': courierId }).sort({ createdAt: -1 });
+};
+
+const getAssignedOrderById = async (orderId, courierId) => {
+  if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    const err = new Error('Invalid orderId');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(courierId)) {
+    const err = new Error('Invalid courierId');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  return Order.findOne({ _id: orderId, 'courier.courierId': courierId });
+};
+
+const assignCourierToOrder = async ({ orderId, courierId, courier }) => {
+  if (!mongoose.Types.ObjectId.isValid(orderId)) {
+    const err = new Error('Invalid orderId');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (!courierId || typeof courierId !== 'string') {
+    const err = new Error('Validation error: courierId is required');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  if (!courier || !courier.name || !courier.phone) {
+    const err = new Error('Validation error: courier.name and courier.phone are required');
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const order = await Order.findById(orderId);
+  if (!order) return null;
+
+  if (order?.courier?.courierId) {
+    const err = new Error('Courier already assigned to this order');
+    err.statusCode = 409;
+    throw err;
+  }
+
+  const User = require('../models/User');
+  const courUser = await User.findById(courierId);
+  if (!courUser || courUser.role !== 'courier') {
+    const err = new Error('Courier not found');
+    err.statusCode = 404;
+    throw err;
+  }
+
+
+  const updated = await Order.findByIdAndUpdate(
+    orderId,
+    {
+      status: 'COURIER_ASSIGNED',
+      orderStatus: 'COURIER_ASSIGNED',
+      courier: {
+        courierId,
+        name: courier.name,
+        phone: courier.phone,
+      },
+      timestamps: {
+        ...(order.timestamps || {}),
+        courierAssignedAt: new Date(),
+      },
+    },
+    { new: true }
+  );
+
+  return updated;
+};
+
+const updateStatus = async (orderId, nextStatus, payload = {}, actingRole = null, actingUserId = null) => {
   if (!VALID_STATUSES.includes(nextStatus)) {
     const err = new Error('Requested status is invalid');
     err.statusCode = 400;
@@ -193,6 +277,15 @@ const updateStatus = async (orderId, nextStatus, payload = {}, actingRole = null
 
   const order = await Order.findById(orderId);
   if (!order) return null;
+
+  // Courier must be assigned for delivery lifecycle updates
+  if ((nextStatus === 'OUT_FOR_DELIVERY' || nextStatus === 'DELIVERED') && actingUserId) {
+    if (!order?.courier?.courierId || order.courier.courierId.toString() !== actingUserId.toString()) {
+      const err = new Error('You are not authorized to update this order.');
+      err.statusCode = 403;
+      throw err;
+    }
+  }
 
   const currentStatus = order.status;
   const allowed = allowedTransitions[currentStatus] || [];
@@ -215,6 +308,11 @@ const updateStatus = async (orderId, nextStatus, payload = {}, actingRole = null
 
   if (nextStatus === 'COURIER_ASSIGNED' && payload?.courier) {
     update.courier = payload.courier;
+    if (payload?.courierAssignedAt) {
+      update['timestamps.courierAssignedAt'] = payload.courierAssignedAt;
+    } else {
+      update['timestamps.courierAssignedAt'] = new Date();
+    }
   }
 
   const updated = await Order.findByIdAndUpdate(orderId, update, { new: true });
@@ -228,5 +326,9 @@ module.exports = {
   listRestaurantOrders,
   getOrderById,
   updateStatus,
+  assignCourierToOrder,
+  listCourierAssignedOrders,
+  getAssignedOrderById,
 };
+
 

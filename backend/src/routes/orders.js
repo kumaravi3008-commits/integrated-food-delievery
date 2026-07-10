@@ -13,6 +13,9 @@ const {
   outForDeliveryOrderHandler,
   deliveredOrderHandler,
   cancelledOrderHandler,
+  assignCourierToOrderHandler,
+  listAssignedOrdersHandler,
+  getAssignedOrderHandler,
 } = require('../controllers/ordersController');
 
 const { requireAuth } = require('../middleware/authMiddleware');
@@ -23,7 +26,20 @@ const router = express.Router();
 router.post('/orders/create', requireAuth, createOrderFromCartHandler);
 router.post('/orders', requireAuth, createOrderHandler);
 
+router.post(
+  '/orders/:orderId/courier/assign',
+  requireAuth,
+  permitRoles('restaurant_owner'),
+  (req, res, next) => {
+    req.body = { ...req.body, orderId: req.params.orderId };
+    return assignCourierToOrderHandler(req, res, next);
+  }
+);
+
 router.get('/orders', requireAuth, listOrdersHandler);
+router.get('/orders/assigned', requireAuth, permitRoles('courier'), listAssignedOrdersHandler);
+router.get('/orders/assigned/:orderId', requireAuth, permitRoles('courier'), getAssignedOrderHandler);
+
 router.get('/restaurants/:restaurantId/orders', requireAuth, permitRoles('restaurant_owner'), listRestaurantOrdersHandler);
 router.get('/orders/:orderId', requireAuth, getOrderHandler);
 
