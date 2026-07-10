@@ -238,13 +238,13 @@ export default function DineExpressHomePage() {
             >
               <button
                 onClick={() => setSearchMode("delivery")}
-                className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${searchMode === "delivery" ? "bg-[#D33F0F] text-white shadow-sm" : "text-[#A3A3A3] hover:text-white"}`}}
+                className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${searchMode === "delivery" ? "bg-[#D33F0F] text-white shadow-sm" : "text-[#A3A3A3] hover:text-white"}`}
               >
                 Food Delivery
               </button>
               <button
                 onClick={() => setSearchMode("dineout")}
-                className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${searchMode === "dineout" ? "bg-[#D33F0F] text-white shadow-sm" : "text-[#A3A3A3] hover:text-white"}`}}
+                className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all duration-300 ${searchMode === "dineout" ? "bg-[#D33F0F] text-white shadow-sm" : "text-[#A3A3A3] hover:text-white"}`}
               >
                 Reserve Table
               </button>
