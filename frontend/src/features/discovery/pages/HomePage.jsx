@@ -143,7 +143,7 @@ export default function DineExpressHomePage() {
       {/* 1. HERO SECTION */}
       <section
         id="home"
-        className="relative pt-20 pb-28 overflow-hidden border-b border-[#111111] flex flex-col items-center justify-center min-h-[90vh]"
+        className="relative overflow-hidden border-b border-[#111111] flex items-center justify-center min-h-[90vh] py-12"
       >
         {/* Dynamic Radially Centered Backdrop Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] sm:w-[650px] sm:h-[650px] bg-[#D33F0F]/10 rounded-full blur-[130px] pointer-events-none z-0" />
@@ -199,7 +199,7 @@ export default function DineExpressHomePage() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="w-full space-y-7 flex flex-col items-center"
+            className="w-full space-y-6 flex flex-col items-center"
           >
             {/* Top Micro-pill Badge */}
             <motion.div variants={staggerItem}>
@@ -212,7 +212,7 @@ export default function DineExpressHomePage() {
             {/* Structural Header Layout */}
             <motion.h1
               variants={staggerItem}
-              className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.15] w-full mt-10 sm:mt-14 md:mt-16"
+              className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.15] w-full mt-4"
             >
               Flavors Delivered.
               <br />
