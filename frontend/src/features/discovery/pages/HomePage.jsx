@@ -584,7 +584,7 @@ export default function DineExpressHomePage() {
             ))}
           </motion.div>
         </div>
-      </section>
+      </section>..
 
       {/* 6. CLIENT TESTIMONIALS */}
       <section className="py-16 bg-[#111111] border-t border-[#2A2A2A]">
