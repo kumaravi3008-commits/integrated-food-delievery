@@ -8,6 +8,8 @@ const ordersRoutes = require('./routes/orders');
 const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const authRoutes = require('./routes/auth');
+const paymentsRoutes = require('./routes/payments');
+
 
 const app = express();
 
@@ -26,10 +28,12 @@ app.use('/api', ordersRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', checkoutRoutes);
 app.use('/api', authRoutes);
+app.use('/api', paymentsRoutes);
 
 
 
 // 404
+
 
 app.use((req, res) => {
   res.status(404).json({ success: false, message: `Route not found: ${req.method} ${req.originalUrl}` });

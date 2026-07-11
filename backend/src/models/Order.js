@@ -35,6 +35,18 @@ const OrderSchema = new mongoose.Schema(
     payment: {
       method: { type: String, required: false, enum: ['CASH', 'CARD', 'ONLINE'] },
       amount: { type: Number, required: false, min: 0 },
+
+      // Day 10 payment simulation fields
+      status: {
+        type: String,
+        required: false,
+        enum: ['PENDING', 'PAID', 'FAILED'],
+        default: 'PENDING',
+      },
+      transactionId: { type: String, default: null, trim: true },
+      paidAt: { type: Date, default: null },
+      failedAt: { type: Date, default: null },
+      failureReason: { type: String, default: null, trim: true },
     },
 
     status: {
