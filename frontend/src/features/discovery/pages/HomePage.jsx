@@ -648,5 +648,6 @@ export default function DineExpressHomePage() {
       <Footer />
     </div>
     </>
+    // ending of footer section 
   );
 }
