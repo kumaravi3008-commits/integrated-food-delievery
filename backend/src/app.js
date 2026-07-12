@@ -9,6 +9,8 @@ const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const authRoutes = require('./routes/auth');
 const paymentsRoutes = require('./routes/payments');
+const reviewsRoutes = require('./routes/reviews');
+
 
 
 const app = express();
@@ -29,10 +31,11 @@ app.use('/api', cartRoutes);
 app.use('/api', checkoutRoutes);
 app.use('/api', authRoutes);
 app.use('/api', paymentsRoutes);
-
+app.use('/api', reviewsRoutes);
 
 
 // 404
+
 
 
 app.use((req, res) => {
