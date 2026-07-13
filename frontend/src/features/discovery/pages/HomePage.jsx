@@ -651,3 +651,5 @@ export default function DineExpressHomePage() {
     // ending of footer section 
   );
 }
+
+// starting of collection page 
