@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const Review = require('../models/Review');
 const Order = require('../models/Order');
+const User = require('../models/User');
 
 const KEYWORDS = [
   'fresh',
@@ -140,7 +141,7 @@ const createReview = async ({ userId, orderId, rating, review }) => {
     createdAt: new Date(),
   });
 
-  const user = await mongoose.models.User?.findById(userId);
+  const user = await User.findById(userId);
   if (user) {
     user.loyaltyPoints = (user.loyaltyPoints || 0) + totalPoints;
     await user.save();
