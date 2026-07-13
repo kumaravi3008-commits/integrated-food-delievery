@@ -3,6 +3,73 @@ const mongoose = require('mongoose');
 const Review = require('../models/Review');
 const Order = require('../models/Order');
 
+const KEYWORDS = [
+  'fresh',
+  'tasty',
+  'delicious',
+  'quality',
+  'fast',
+  'clean',
+  'service',
+  'friendly',
+  'excellent',
+  'recommended',
+];
+
+const calculateLengthPoints = (reviewText) => {
+  const len = (reviewText || '').length;
+  if (len >= 20 && len <= 49) return 5;
+  if (len >= 50 && len <= 99) return 10;
+  if (len >= 100) return 20;
+  return 0;
+};
+
+const calculateRatingPoints = (rating) => {
+  switch (Number(rating)) {
+    case 5:
+      return 10;
+    case 4:
+      return 8;
+    case 3:
+      return 5;
+    case 2:
+      return 2;
+    case 1:
+      return 1;
+    default:
+      return 0;
+  }
+};
+
+const extractUniqueKeywords = (reviewText) => {
+  const text = (reviewText || '').toLowerCase();
+
+  const matched = new Set();
+  for (const keyword of KEYWORDS) {
+    const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+    if (regex.test(text)) matched.add(keyword);
+  }
+  return matched;
+};
+
+const calculateKeywordPoints = (reviewText) => {
+  const uniqueKeywords = extractUniqueKeywords(reviewText);
+  const count = uniqueKeywords.size;
+
+  if (count >= 1 && count <= 2) return 5;
+  if (count >= 3 && count <= 5) return 10;
+  if (count > 5) return 15;
+  return 0;
+};
+
+const calculateTotalReviewPoints = ({ reviewText, rating }) => {
+  const lengthPoints = calculateLengthPoints(reviewText);
+  const ratingPoints = calculateRatingPoints(rating);
+  const keywordPoints = calculateKeywordPoints(reviewText);
+
+  return lengthPoints + ratingPoints + keywordPoints;
+};
+
 const createReview = async ({ userId, orderId, rating, review }) => {
   if (!userId) {
     const err = new Error('Authentication required');
@@ -57,14 +124,27 @@ const createReview = async ({ userId, orderId, rating, review }) => {
     throw err;
   }
 
+  const totalPoints = calculateTotalReviewPoints({
+    reviewText: normalizedReview,
+    rating: numericRating,
+  });
+
+  // Create review first; only award points if creation succeeds.
   const created = await Review.create({
     userId,
     orderId,
     restaurantId: order.restaurantId,
     rating: numericRating,
     review: normalizedReview,
+    pointsEarned: totalPoints,
     createdAt: new Date(),
   });
+
+  const user = await mongoose.models.User?.findById(userId);
+  if (user) {
+    user.loyaltyPoints = (user.loyaltyPoints || 0) + totalPoints;
+    await user.save();
+  }
 
   return created;
 };

@@ -11,6 +11,7 @@ const ReviewSchema = new mongoose.Schema(
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant', required: true },
     rating: { type: Number, required: true, min: 1, max: 5 },
     review: { type: String, required: true, trim: true },
+    pointsEarned: { type: Number, required: true, default: 0 },
     createdAt: { type: Date, required: true, default: Date.now },
   },
   { timestamps: false }

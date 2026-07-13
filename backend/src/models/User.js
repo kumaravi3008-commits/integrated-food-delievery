@@ -22,6 +22,12 @@ const UserSchema = new mongoose.Schema(
       enum: ['consumer', 'restaurant_owner', 'courier'],
       default: 'consumer',
     },
+
+    loyaltyPoints: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
