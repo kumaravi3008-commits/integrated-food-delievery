@@ -10,10 +10,13 @@ const checkoutRoutes = require('./routes/checkout');
 const authRoutes = require('./routes/auth');
 const paymentsRoutes = require('./routes/payments');
 const reviewsRoutes = require('./routes/reviews');
+const reviewSuggestionsRoutes = require('./routes/reviewSuggestions');
+
 
 
 
 const app = express();
+
 
 
 
@@ -32,9 +35,12 @@ app.use('/api', checkoutRoutes);
 app.use('/api', authRoutes);
 app.use('/api', paymentsRoutes);
 app.use('/api', reviewsRoutes);
+app.use('/api', reviewSuggestionsRoutes);
+
 
 
 // 404
+
 
 
 
