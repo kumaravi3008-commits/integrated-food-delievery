@@ -652,4 +652,6 @@ export default function DineExpressHomePage() {
   );
 }
 
-// starting of collection page 
+// starting of product detail page 
+
+
