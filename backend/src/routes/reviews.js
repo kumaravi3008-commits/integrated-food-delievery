@@ -1,6 +1,8 @@
 const express = require('express');
 
 const { requireAuth } = require('../middleware/authMiddleware');
+const { validateBody } = require('../middleware/validateBodyZod');
+const { createReviewSchema } = require('../middleware/validators/reviewSchemas');
 
 const {
   createReviewHandler,
@@ -10,11 +12,12 @@ const {
 
 const router = express.Router();
 
-router.post('/reviews', requireAuth, createReviewHandler);
+router.post('/reviews', requireAuth, validateBody(createReviewSchema), createReviewHandler);
 
 router.get('/restaurants/:restaurantId/reviews', listRestaurantReviewsHandler);
 
 router.get('/reviews/my', requireAuth, listMyReviewsHandler);
 
 module.exports = router;
+
 
