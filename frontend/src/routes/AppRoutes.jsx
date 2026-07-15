@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import WelcomePage from '../features/discovery/pages/WelcomePage';
-import HomePage from '../features/discovery/pages/HomePage';
+import HomePage from '../features/discovery/pages/home/Homepage';
 
 const AppRoutes = () => {
   return (
