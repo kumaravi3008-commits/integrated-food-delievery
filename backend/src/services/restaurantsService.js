@@ -1,6 +1,6 @@
 const Restaurant = require('../models/Restaurant');
 
-const createRestaurant = async ({ name, address, phone, status, location }) => {
+const createRestaurant = async ({ name, address, phone, status, location, ownerId }) => {
   const restaurant = await Restaurant.create({
     name,
     address,
@@ -8,6 +8,7 @@ const createRestaurant = async ({ name, address, phone, status, location }) => {
     status,
     // Backwards compatible: location is optional for existing clients.
     location,
+    ownerId,
   });
   return restaurant;
 };

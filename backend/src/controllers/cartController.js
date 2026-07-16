@@ -5,7 +5,9 @@ const {
   getCartByCustomerId,
 } = require('../services/cartService');
 
-const { assertValidObjectId } = require('../utils/validation');
+const {
+  assertValidObjectId,
+} = require('../utils/validation');
 
 const addItemHandler = async (req, res) => {
   try {
@@ -72,6 +74,7 @@ const getCartHandler = async (req, res) => {
     const customerId = req.user?.userId;
     const safeCustomerId = assertValidObjectId({ value: customerId, field: 'customerId' });
 
+
     const cart = await getCartByCustomerId(safeCustomerId);
     if (!cart) {
       return res.status(404).json({ success: false, message: 'Cart not found' });
@@ -84,12 +87,12 @@ const getCartHandler = async (req, res) => {
   }
 };
 
-
 module.exports = {
   addItemHandler,
   removeItemHandler,
   updateQuantityHandler,
   getCartHandler,
 };
+
 
 

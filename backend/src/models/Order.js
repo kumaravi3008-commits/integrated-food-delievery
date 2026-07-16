@@ -18,7 +18,7 @@ const OrderSchema = new mongoose.Schema(
     subtotal: { type: Number, required: true, min: 0 },
     grandTotal: { type: Number, required: true, min: 0 },
 
-    orderStatus: { type: String, required: true, default: 'PENDING', trim: true },
+    orderStatus: { type: String, required: true, default: 'PLACED', trim: true },
 
     createdAt: { type: Date, required: true, default: Date.now },
 
@@ -35,6 +35,18 @@ const OrderSchema = new mongoose.Schema(
     payment: {
       method: { type: String, required: false, enum: ['CASH', 'CARD', 'ONLINE'] },
       amount: { type: Number, required: false, min: 0 },
+
+      // Day 10 payment simulation fields
+      status: {
+        type: String,
+        required: false,
+        enum: ['PENDING', 'PAID', 'FAILED'],
+        default: 'PENDING',
+      },
+      transactionId: { type: String, default: null, trim: true },
+      paidAt: { type: Date, default: null },
+      failedAt: { type: Date, default: null },
+      failureReason: { type: String, default: null, trim: true },
     },
 
     status: {
@@ -44,9 +56,10 @@ const OrderSchema = new mongoose.Schema(
         'PLACED',
         'ACCEPTED',
         'PREPARING',
+        'OUT_FOR_DELIVERY',
+        'DELIVERED',
         'COURIER_ASSIGNED',
         'PICKED_UP',
-        'DELIVERED',
         'CANCELLED',
       ],
       default: 'PLACED',
@@ -62,6 +75,7 @@ const OrderSchema = new mongoose.Schema(
       placedAt: { type: Date, default: null },
       acceptedAt: { type: Date, default: null },
       preparingAt: { type: Date, default: null },
+      outForDeliveryAt: { type: Date, default: null },
       courierAssignedAt: { type: Date, default: null },
       pickedUpAt: { type: Date, default: null },
       deliveredAt: { type: Date, default: null },

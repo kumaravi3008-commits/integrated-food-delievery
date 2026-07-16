@@ -8,7 +8,7 @@ const permitRoles = (...allowedRoles) => {
     }
 
     if (!allowed.has(role)) {
-      return res.status(403).json({ success: false, message: 'Forbidden' });
+      return res.status(403).json({ success: false, message: 'You are not authorized to perform this action.' });
     }
 
     return next();

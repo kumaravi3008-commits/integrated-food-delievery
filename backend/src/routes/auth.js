@@ -4,12 +4,14 @@ const authController = require('../controllers/authController');
 const { requireAuth } = require('../middleware/authMiddleware');
 const { permitRoles } = require('../middleware/rbac');
 
+const { validateBody } = require('../middleware/validateBodyZod');
+const { registerSchema, loginSchema, resetPasswordSchema } = require('../middleware/validators/authSchemas');
 
 const router = express.Router();
 
-router.post('/auth/register', authController.registerHandler);
-router.post('/auth/login', authController.loginHandler);
-router.post('/auth/reset-password', authController.resetPasswordHandler);
+router.post('/auth/register', validateBody(registerSchema), authController.registerHandler);
+router.post('/auth/login', validateBody(loginSchema), authController.loginHandler);
+router.post('/auth/reset-password', validateBody(resetPasswordSchema), authController.resetPasswordHandler);
 router.get(
   '/auth/profile',
   requireAuth,
@@ -17,6 +19,6 @@ router.get(
   authController.profileHandler
 );
 
-
 module.exports = router;
+
 
