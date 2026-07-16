@@ -43,8 +43,10 @@ export default function FoodCategories() {
                     boxShadow: "0 25px 50px -20px rgba(255,122,0,0.4)",
                   }}
                   style={{ transformStyle: "preserve-3d", perspective: 800 }}
+                  onClick={() => (window.location.href = '/categories')}
                   className="flex flex-col items-center justify-center gap-3 w-32 h-32 shrink-0 rounded-2xl bg-[#161616] border border-[#2A2A2A] cursor-pointer transition-colors hover:border-[#FF7A00]/50"
                 >
+
                   <motion.div
                     whileHover={{ scale: 1.2, rotate: [0, -8, 8, 0] }}
                     transition={{ duration: 0.5 }}

@@ -39,9 +39,10 @@ const Footer = () => {
               Company
             </h4> 
             <ul className="flex flex-col gap-3 text-[14px] text-gray-400 font-normal"> 
-              <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Partner with Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+              <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
+              <li><span className="text-gray-400">Partner with Us</span></li>
+              <li><span className="text-gray-400">Careers</span></li>
+
             </ul>
           </div>
 
@@ -51,9 +52,10 @@ const Footer = () => {
               Support
             </h4>
             <ul className="flex flex-col gap-3 text-[14px] text-gray-400 font-normal">
-              <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="/help" className="hover:text-white transition-colors">Help Center</a></li>
+              <li><a href="/contact" className="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="/terms" className="hover:text-white transition-colors">Terms of Service</a></li>
+
             </ul>
           </div>
 

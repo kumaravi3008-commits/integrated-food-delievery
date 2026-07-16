@@ -113,10 +113,12 @@ export default function PopularRestaurants() {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
+                  onClick={() => (window.location.href = `/restaurants/${res.id}`)}
                   className="mt-1 bg-[#FF7A00] hover:bg-[#FF8F1F] text-white text-xs font-semibold py-2.5 rounded-lg transition-colors"
                 >
                   Order now
                 </motion.button>
+
               </div>
             </motion.div>
           ))}

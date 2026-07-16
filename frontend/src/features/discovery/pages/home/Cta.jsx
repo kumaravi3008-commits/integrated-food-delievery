@@ -51,18 +51,20 @@ export default function CTA() {
           </p>
 
           <div className="relative flex flex-wrap items-center justify-center gap-4">
-            <motion.button
-              whileHover={{
-                scale: 1.04,
-                // Slightly increased the shadow intensity on hover for better effect
-                boxShadow: "0 20px 50px -12px rgba(255,122,0,0.6)",
-              }}
-              whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 bg-[#FF7A00]/10 backdrop-blur-md border border-[#FF7A00]/30 text-[#FF7A00] font-semibold text-sm px-7 py-3.5 rounded-xl transition-colors duration-300"
-            >
-              Order now
-              <ArrowRight className="w-4 h-4" />
-            </motion.button>
+              <motion.button
+                whileHover={{
+                  scale: 1.04,
+                  // Slightly increased the shadow intensity on hover for better effect
+                  boxShadow: "0 20px 50px -12px rgba(255,122,0,0.6)",
+                }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => (window.location.href = '/restaurants')}
+                className="flex items-center gap-2 bg-[#FF7A00]/10 backdrop-blur-md border border-[#FF7A00]/30 text-[#FF7A00] font-semibold text-sm px-7 py-3.5 rounded-xl transition-colors duration-300"
+              >
+                Order now
+                <ArrowRight className="w-4 h-4" />
+              </motion.button>
+
           </div>
         </motion.div>
       </div>

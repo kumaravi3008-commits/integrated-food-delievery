@@ -6,9 +6,6 @@ import PremiumPageShell from '../PremiumPageShell';
 import PremiumCard from '../PremiumCard';
 import { mockRestaurant, mockRestaurantNearby } from '../mockData';
 
-// NOTE: This is a premium-identity Food Detail UI scaffold using local mock data.
-
-
 function Chip({ children, active, onClick }) {
   return (
     <button
@@ -28,6 +25,11 @@ function Chip({ children, active, onClick }) {
 
 export default function FoodItemDetailShell() {
   const { id } = useParams();
+
+  // NOTE: This premium UI scaffold is still mock-backed for dish details.
+
+  // TODO: Replace with backend-wired menu item details + add-to-cart.
+  // Keeping this component intact to avoid breaking the UI while we wire the rest of the flow.
 
   // Flatten menu items from the restaurant mock
   const allItems = useMemo(() => {
