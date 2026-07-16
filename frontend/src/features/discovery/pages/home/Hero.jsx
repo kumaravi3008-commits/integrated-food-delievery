@@ -66,19 +66,23 @@ export default function Hero() {
           className="flex flex-col gap-7"
         >
           <div className="inline-flex items-center gap-2 bg-[#161616] border border-[#2A2A2A] px-4 py-1.5 rounded-full text-xs font-medium text-[#FFB800] w-fit">
-            <Percent className="w-3.5 h-3.5" />  Every Cuisine. Every Restaurant. Every Time.
+            <Percent className="w-3.5 h-3.5" /> Every Cuisine. Every Restaurant.
+            Every Time.
           </div>
 
           <h1 className="font-display text-[2.6rem] sm:text-6xl lg:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white">
             Dine Your Favorites. <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF7A00] to-[#FFB800]">
-             Express Your Cravings.
+              Express Your Cravings.
             </span>
           </h1>
 
-          <p className="text-gray-400 text-base sm:text-lg max-w-lg leading-relaxed">
-            Order from restaurants, book tables, schedule pickups, and
-            experience the next generation of dining — all from one app.
+          <p
+            className="text-gray-400 text-base sm:text-lg max-w-lg leading-relaxed"
+            style={{ fontFamily: "'Dancing Script', cursive" }}
+          >
+            Dine Express: Order, book, and collect—the future of dining in one
+            tap.
           </p>
 
           <div className="flex flex-wrap items-center gap-5 pt-3">
@@ -171,8 +175,8 @@ export default function Hero() {
                 type="text"
                 placeholder={
                   searchMode === "order"
-                    ? "Search for dishes, drinks, delivery..."
-                    : "Search for dining and restaurant things..."
+                    ? "Search for your favorite flavors..."
+                    : "Find a table or order food..."
                 }
                 className="bg-transparent outline-none text-sm text-white placeholder-gray-500 w-full"
               />

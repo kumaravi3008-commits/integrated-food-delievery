@@ -30,11 +30,12 @@ export default function Testimonials() {
           viewport={viewport}
           variants={fadeUp}
           className="text-center max-w-xl mb-14"
+            style={{ paddingTop: "2rem", marginBottom: "7rem" }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Testimonials
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+         <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
             What our diners say
           </h2>
         </motion.div>

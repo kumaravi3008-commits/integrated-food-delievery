@@ -14,12 +14,13 @@ export default function HowItWorks() {
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-16"
+          className="text-center max-w-xl mx-auto"
+          style={{ paddingTop: "2rem", marginBottom: "8rem" }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Simple by design
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
             How it works
           </h2>
         </motion.div>
@@ -29,7 +30,7 @@ export default function HowItWorks() {
           whileInView="visible"
           viewport={viewport}
           variants={staggerContainer(0.2)}
-          className="relative grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 w-full"
+          className="relative grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 w-full justify-items-center"
         >
           {/* Connecting dotted line, desktop only */}
           <div className="hidden sm:block absolute top-9 left-[16.5%] right-[16.5%] h-px border-t-2 border-dotted border-[#2A2A2A]" />

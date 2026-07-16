@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Store } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { fadeUp, viewport } from "./animations";
 
 export default function CTA() {
   return (
     <section className="relative w-full py-10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -33,7 +33,12 @@ export default function CTA() {
           />
           <motion.div
             animate={{ y: [0, 18, 0], x: [0, -12, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 0.5,
+            }}
             className="absolute -bottom-10 -right-10 w-56 h-56 rounded-full bg-[#FFB800]/15 blur-[90px] pointer-events-none"
           />
 
@@ -47,20 +52,16 @@ export default function CTA() {
 
           <div className="relative flex flex-wrap items-center justify-center gap-4">
             <motion.button
-              whileHover={{ scale: 1.04, boxShadow: "0 20px 50px -15px rgba(255,122,0,0.5)" }}
+              whileHover={{
+                scale: 1.04,
+                // Slightly increased the shadow intensity on hover for better effect
+                boxShadow: "0 20px 50px -12px rgba(255,122,0,0.6)",
+              }}
               whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 bg-[#FF7A00] text-white font-semibold text-sm px-7 py-3.5 rounded-xl"
+              className="flex items-center gap-2 bg-[#FF7A00]/10 backdrop-blur-md border border-[#FF7A00]/30 text-[#FF7A00] font-semibold text-sm px-7 py-3.5 rounded-xl transition-colors duration-300"
             >
               Order now
               <ArrowRight className="w-4 h-4" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.04, borderColor: "#FF7A00" }}
-              whileTap={{ scale: 0.96 }}
-              className="flex items-center gap-2 bg-transparent border border-[#2A2A2A] text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-colors"
-            >
-              <Store className="w-4 h-4" />
-              Become a partner
             </motion.button>
           </div>
         </motion.div>

@@ -12,11 +12,12 @@ export default function FoodCategories() {
           viewport={viewport}
           variants={fadeUp}
           className="text-center max-w-xl mb-14"
+          style={{ paddingTop: "2rem", marginBottom: "8rem" }}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
             Craving something?
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-3">
             Browse by category
           </h2>
         </motion.div>
@@ -28,7 +29,7 @@ export default function FoodCategories() {
           variants={staggerContainer(0.06)}
           className="w-full overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
         >
-          <div className="flex gap-5 w-max mx-auto px-2">
+          <div className="flex gap-9 w-max mx-auto px-2">
             {CATEGORIES.map((cat) => {
               const Icon = cat.icon;
               return (

@@ -9,24 +9,28 @@ export default function PopularRestaurants() {
 
   const toggleLike = (id) => {
     setLiked((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
 
   return (
-    <section id="restaurants" className="relative w-full py-10">
+    <section id="restaurants" className="relative w-full py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-14"
+          className="text-center max-w-xl"
+          style={{
+            paddingTop: "2rem",
+            marginBottom: "8rem",
+          }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Highly rated
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
             Popular restaurants near you
           </h2>
         </motion.div>

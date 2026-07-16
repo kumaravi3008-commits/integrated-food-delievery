@@ -59,14 +59,7 @@ export default function WhyChooseUs() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
           </div>
-          <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-6 -left-4 bg-[#161616] border border-[#2A2A2A] rounded-xl px-4 py-3 shadow-xl"
-          >
-            <p className="text-xs text-gray-400">Avg. rating</p>
-            <p className="text-lg font-bold text-white">4.8 / 5</p>
-          </motion.div>
+        
         </motion.div>
 
         {/* RIGHT: stats */}

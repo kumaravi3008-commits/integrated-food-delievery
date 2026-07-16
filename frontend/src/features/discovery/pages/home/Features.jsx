@@ -5,28 +5,29 @@ import { FEATURES } from "./homeData";
 export default function Features() {
   return (
     <section className="relative w-full py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-14"
+          className="text-center max-w-xl pt-4"
+          style={{ marginBottom: "6rem" }}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Why it works
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
             Built for how you actually eat
           </h2>
         </motion.div>
-
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={staggerContainer(0.1)}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
+          // Added justify-items-center to center the grid items within the container
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full justify-items-center mt-16 mb-28"
         >
           {FEATURES.map((feature) => {
             const Icon = feature.icon;
@@ -39,9 +40,10 @@ export default function Features() {
                   boxShadow: "0 20px 60px -20px rgba(255,122,0,0.35)",
                   borderColor: "rgba(255,122,0,0.4)",
                 }}
-                className="group relative rounded-2xl border border-[#2A2A2A] bg-[#161616]/60 backdrop-blur-xl p-6 overflow-hidden transition-colors"
+                // Added flex, flex-col, items-center, and text-center to center content inside the card
+                className="group relative rounded-3xl border border-[#2A2A2A] bg-[#161616]/60 backdrop-blur-xl p-8 overflow-hidden transition-colors flex flex-col items-center text-center"
+                className="group relative rounded-3xl border border-[#2A2A2A] bg-[#161616]/60 backdrop-blur-xl p-8 overflow-hidden transition-colors flex flex-col items-center text-center"
               >
-                {/* Gradient border glow on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#FF7A00]/10 via-transparent to-transparent pointer-events-none" />
 
                 <motion.div
@@ -55,7 +57,7 @@ export default function Features() {
                 <h3 className="relative text-base font-semibold text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="relative text-sm text-gray-400 leading-relaxed">
+                <p className="relative text-sm text-gray-400 leading-relaxed max-w-[280px]">
                   {feature.desc}
                 </p>
               </motion.div>

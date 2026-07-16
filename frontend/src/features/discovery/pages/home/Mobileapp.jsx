@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
 import { Apple, PlayCircle, QrCode, CheckCircle2 } from "lucide-react";
-import { fadeLeft, fadeRight, staggerContainer, fadeUp, floatLoop } from "./animations";
+import {
+  fadeLeft,
+  fadeRight,
+  staggerContainer,
+  fadeUp,
+  floatLoop,
+} from "./animations";
 
 const APP_FEATURES = [
   "Order in three taps with saved addresses",
@@ -25,29 +31,50 @@ export default function MobileApp() {
         >
           <motion.div
             animate={floatLoop(14, 5)}
-            className="relative w-[220px] h-[400px] rounded-[2.2rem] bg-[#111111] border border-[#2A2A2A] shadow-2xl overflow-hidden z-10"
+            className="relative w-[220px] h-[400px] rounded-[2.5rem] bg-[#111111] border-[8px] border-[#1a1a1a] shadow-2xl overflow-hidden z-10"
           >
+            {/* The Notch */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#1a1a1a] rounded-b-2xl z-20" />
+
             <img
               src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=500&auto=format&fit=crop&q=80"
               alt="App order screen"
-              className="w-full h-48 object-cover"
+              className="w-full h-40 object-cover mt-2"
             />
-            <div className="p-4 space-y-3">
-              <div className="h-3 w-2/3 bg-[#2A2A2A] rounded-full" />
-              <div className="h-3 w-1/2 bg-[#2A2A2A] rounded-full" />
-              <div className="h-9 w-full rounded-xl bg-[#FF7A00] mt-4" />
-            </div>
-          </motion.div>
 
-          <motion.div
-            animate={floatLoop(12, 4.5, 0.4)}
-            className="absolute left-2 top-6 w-24 h-40 rounded-2xl bg-[#161616] border border-[#2A2A2A] shadow-xl overflow-hidden hidden sm:block"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&auto=format&fit=crop&q=80"
-              alt="App screenshot"
-              className="w-full h-full object-cover opacity-80"
-            />
+            <div className="p-4 space-y-4">
+              <div className="h-3 w-2/3 bg-[#2A2A2A] rounded-full" />
+              <div className="h-9 w-full rounded-xl bg-[#FF7A00]" />
+
+              {/* MOCK LIST */}
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#2A2A2A]" />
+                  <div className="h-2 w-20 bg-[#2A2A2A] rounded-full" />
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-[#2A2A2A]" />
+                  <div className="h-2 w-24 bg-[#2A2A2A] rounded-full" />
+                </div>
+              </div>
+
+              {/* NEW: App Store / Play Store Mock Section */}
+              <div className="mt-6 pt-6 border-t border-[#2A2A2A] flex flex-col items-center gap-2">
+                <div className="h-2 w-16 bg-[#2A2A2A] rounded-full mb-1" />{" "}
+                {/* "Available on" text */}
+                <div className="flex gap-2">
+                  <div className="h-7 w-20 bg-[#2A2A2A] rounded-md" />{" "}
+                  {/* App Store Button */}
+                  <div className="h-7 w-20 bg-[#2A2A2A] rounded-md" />{" "}
+                  {/* Play Store Button */}
+                </div>
+                <div className="flex gap-1 mt-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="w-3 h-3 bg-[#FF7A00] rounded-sm" />
+                  ))}
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
