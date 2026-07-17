@@ -86,26 +86,32 @@ const getReviewSuggestionsByOrderId = async ({ orderId, customerId }) => {
   }
 
   // Enforce ownership: ensure order belongs to authenticated customer
-  // We do a two-step check to differentiate 404 (not found) vs 403 (belongs to another customer)
-  const orderAny = await require('../models/Order').findById(orderId);
-  if (!orderAny) {
-    const err = new Error('Order not found');
-    err.statusCode = 404;
-    throw err;
-  }
+  // Single query with ownership condition to reduce redundant DB operations.
+  // Behavior remains the same: not found -> 404, wrong customer -> 403.
+  const Order = require('../models/Order');
+  const orderOwned = await Order.findOne({ _id: orderId, customerId }).lean();
+  if (!orderOwned) {
+    // Determine whether the order exists but belongs to someone else.
+    const orderAny = await Order.findById(orderId).lean();
+    if (!orderAny) {
+      const err = new Error('Order not found');
+      err.statusCode = 404;
+      throw err;
+    }
 
-  if (orderAny.customerId?.toString() !== customerId.toString()) {
     const err = new Error('Order does not belong to this customer');
     err.statusCode = 403;
     throw err;
   }
 
-  const orderedItems = Array.isArray(orderAny.items) ? orderAny.items : [];
+
+  const orderedItems = Array.isArray(orderOwned.items) ? orderOwned.items : [];
   if (orderedItems.length === 0) {
     const err = new Error('Order contains no items');
     err.statusCode = 400;
     throw err;
   }
+
 
   // Extract keywords from item names (and best-effort categories if present)
   const texts = [];
@@ -121,11 +127,12 @@ const getReviewSuggestionsByOrderId = async ({ orderId, customerId }) => {
   const suggestions = buildSuggestionTemplates({ orderedItems, keywords });
 
   return {
-    orderId: orderAny._id.toString(),
+    orderId: orderOwned._id.toString(),
     keywords,
     suggestions,
   };
 };
+
 
 module.exports = {
   getReviewSuggestionsByOrderId,

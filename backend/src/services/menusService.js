@@ -16,27 +16,31 @@ const listMenusByRestaurant = async ({ restaurantId, category } = {}) => {
     return Menu.find({
       ...baseQuery,
       $or: [{ 'items.name': categoryRegex }, { 'items.description': categoryRegex }],
-    });
+    }).lean();
   }
 
-  return Menu.find(baseQuery);
+  return Menu.find(baseQuery).lean();
 };
 
+
 const getMenuById = async (menuId) => {
-  return Menu.findById(menuId);
+  return Menu.findById(menuId).lean();
 };
+
 
 const updateMenu = async (menuId, { name, description, items, status }) => {
   return Menu.findByIdAndUpdate(
     menuId,
     { $set: { name, description, items, status } },
     { new: true }
-  );
+  ).lean();
 };
 
+
 const deleteMenu = async (menuId) => {
-  return Menu.findByIdAndDelete(menuId);
+  return Menu.findByIdAndDelete(menuId).lean();
 };
+
 
 module.exports = {
   createMenu,

@@ -2,7 +2,10 @@ require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
 const http = require('http');
 
-console.log('JWT_SECRET =', process.env.JWT_SECRET || 'dev-secret');
+if (process.env.NODE_ENV !== 'production') {
+  console.log('JWT_SECRET =', process.env.JWT_SECRET || 'dev-secret');
+}
+
 
 const app = require('./src/app');
 const connectDB = require('./src/config/db');

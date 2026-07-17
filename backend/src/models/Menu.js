@@ -17,5 +17,11 @@ const MenuSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Performance indexes (safe additions only)
+MenuSchema.index({ restaurantId: 1 });
+// Supports queries like: Menu.findOne({ 'items._id': menuItemId })
+MenuSchema.index({ 'items._id': 1 });
+
 module.exports = mongoose.model('Menu', MenuSchema);
+
 

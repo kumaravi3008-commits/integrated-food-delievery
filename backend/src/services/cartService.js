@@ -4,8 +4,15 @@ const Cart = require('../models/Cart');
 const Menu = require('../models/Menu');
 
 const findCartByCustomerId = async (customerId) => {
-  return Cart.findOne({ customerId });
+  // Preserve Day 15 optimization for real Mongoose queries,
+  // but remain compatible with unit-test mocks that may not implement .lean().
+  const query = Cart.findOne({ customerId });
+  if (query && typeof query.lean === 'function') {
+    return query.lean();
+  }
+  return query;
 };
+
 
 const createCartValidationError = (statusCode, message) => {
   const err = new Error(message);
@@ -15,6 +22,11 @@ const createCartValidationError = (statusCode, message) => {
 
 const getMenuItemDetails = async (menuItemId) => {
   const menuDoc = await Menu.findOne({ 'items._id': menuItemId }).select({ restaurantId: 1, items: 1 });
+
+
+
+
+
   if (!menuDoc || !Array.isArray(menuDoc.items)) return null;
 
   const item = menuDoc.items.find((it) => it._id?.toString() === menuItemId);
@@ -84,9 +96,20 @@ const addItemToCart = async ({ customerId, menuItemId, quantity }) => {
 
   cart.restaurantId = restaurantId;
 
-  await cart.save();
-  return cart;
+  // cart is a mutable mongoose doc when sourced from findOne() without lean.
+  // Since findCartByCustomerId uses lean(), we re-fetch the cart as a document before mutating.
+  // (Keeps business logic identical while allowing read-only performance improvements.)
+  const cartDoc = await Cart.findOne({ customerId });
+  if (!cartDoc) return cart;
+
+  // Apply mutations to the document instance
+  cartDoc.items = cart.items;
+  cartDoc.restaurantId = cart.restaurantId;
+
+  await cartDoc.save();
+  return cartDoc;
 };
+
 
 /**
  * REMOVE ITEM
@@ -103,9 +126,14 @@ const removeItemFromCart = async ({ customerId, menuItemId }) => {
     cart.restaurantId = null;
   }
 
-  await cart.save();
-  return cart;
+  const cartDoc = await Cart.findOne({ customerId });
+  if (!cartDoc) return cart;
+  cartDoc.items = cart.items;
+  cartDoc.restaurantId = cart.restaurantId;
+  await cartDoc.save();
+  return cartDoc;
 };
+
 
 /**
  * UPDATE QUANTITY

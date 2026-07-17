@@ -33,26 +33,30 @@ const listRestaurants = async (filters = {}) => {
   }
 
 
-  return Restaurant.find(query);
+  return Restaurant.find(query).lean();
 };
+
 
 
 const getRestaurantById = async (restaurantId) => {
-  return Restaurant.findById(restaurantId);
+  return Restaurant.findById(restaurantId).lean();
 };
+
 
 const updateRestaurant = async (restaurantId, { name, address, phone, status }) => {
   return Restaurant.findByIdAndUpdate(
     restaurantId,
     { $set: { name, address, phone, status } },
     { new: true }
-  );
+  ).lean();
 };
 
+
 const deleteRestaurant = async (restaurantId) => {
-  const deleted = await Restaurant.findByIdAndDelete(restaurantId);
+  const deleted = await Restaurant.findByIdAndDelete(restaurantId).lean();
   return deleted;
 };
+
 
 const nearbyRestaurants = async ({
   longitude,

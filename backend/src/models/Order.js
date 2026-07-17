@@ -87,8 +87,19 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
+// Performance indexes (safe additions only)
+// - Support common listing patterns and courier assignment lookups
+// - Do not remove/modify existing schema behavior
+OrderSchema.index({ customerId: 1, createdAt: -1 });
+OrderSchema.index({ restaurantId: 1, createdAt: -1 });
+OrderSchema.index({ 'courier.courierId': 1, createdAt: -1 });
+
 const Order = mongoose.model('Order', OrderSchema);
 
 module.exports = Order;
+
+
+
+
 
 
