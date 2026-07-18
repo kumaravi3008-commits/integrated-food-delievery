@@ -2,21 +2,20 @@ import { Send, Share2, Globe } from 'lucide-react';
 
 const Footer = () => {
   return (
-    // Added translucent background, backdrop blur, and top border ring
-    <footer className="relative bg-[#2c2929] text-white pt-20 pb-12 px-8 lg:px-20 border-t border-white/10 overflow-hidden">
+    <footer className="relative bg-[#050505] text-white pt-16 sm:pt-20 pb-12 px-6 sm:px-8 lg:px-20 border-t border-white/10 overflow-hidden">
       
       {/* Background radial ambient glow to enhance the glass transparency depth */}
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-orange-600/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute -top-40 right-0 w-96 h-96 bg-white/[0.02] blur-[100px] rounded-full pointer-events-none" />
 
-      <div className="max-w-[1500px] w-full mx-auto relative z-10">
+      <div className="max-w-layout-full w-full mx-auto relative z-10">
         
         {/* Main Footer Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-start mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 items-start mb-16">
           
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-6"> 
-            <div className="text-3xl font-bold text-[#f07d56] tracking-tight">
+            <div className="text-3xl font-bold text-[#FF7A00] tracking-tight">
               DineExpress
             </div>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
@@ -88,7 +87,7 @@ const Footer = () => {
         {/* Bottom Copyright Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-normal">
           <p>
-            © 2026 CraveDash Inc. All rights reserved.
+            © 2026 DineExpress Inc. All rights reserved.
           </p>
           <div className="flex gap-6">
             <span className="cursor-pointer hover:text-white transition-colors">Privacy Policy</span>

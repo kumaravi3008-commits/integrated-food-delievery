@@ -5,6 +5,7 @@ export default function SettingsShell() {
     <PlaceholderPremiumPage
       title="Settings"
       subtitle="Account, preferences and app settings."
+      layout="dashboard"
     />
   );
 }

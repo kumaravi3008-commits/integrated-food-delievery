@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Hero from "../../../components/layout/Hero/Hero";
 import Footer from "../../../components/layout/Footer/Footer";
+import MarketingLayout from "../../../components/layout/purpose/MarketingLayout";
 
 import { MessageSquareText } from 'lucide-react';
 
@@ -8,7 +9,7 @@ function WelcomePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white font-sans antialiased">
+    <MarketingLayout showFooter={false}>
       <main>
         <Hero />
       </main>
@@ -24,7 +25,7 @@ function WelcomePage() {
       >
         <MessageSquareText size={30} fill="currentColor" fillOpacity={0.2} />
       </button>
-    </div>
+    </MarketingLayout>
   );
 }
 

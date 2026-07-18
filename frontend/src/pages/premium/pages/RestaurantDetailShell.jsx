@@ -29,6 +29,7 @@ export default function RestaurantDetailShell() {
     <PremiumPageShell
       title={restaurant.name}
       subtitle={`${restaurant.cuisine} • ${restaurant.priceTier}`}
+      layout="detail"
     >
       <div className="w-full flex flex-col gap-7">
         {/* Banner + logo */}

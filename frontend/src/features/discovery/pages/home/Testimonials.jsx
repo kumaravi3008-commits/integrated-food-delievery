@@ -22,20 +22,19 @@ export default function Testimonials() {
   const current = TESTIMONIALS[index];
 
   return (
-    <section className="relative w-full py-10">
+    <section className="relative w-full py-16 sm:py-20">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-14"
-            style={{ paddingTop: "2rem", marginBottom: "7rem" }}
+          className="text-center max-w-xl mb-16 sm:mb-20"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Testimonials
           </p>
-         <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
             What our diners say
           </h2>
         </motion.div>

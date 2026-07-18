@@ -17,7 +17,8 @@ import ResetPasswordShell from '../pages/premium/pages/ResetPasswordShell';
 
 
 
-const LazyHomePage = lazy(() => import('../features/discovery/pages/home/Hero'));
+const LazyHomePage = lazy(() => import('../features/discovery/pages/Home/homepage.jsx'));
+
 const LazyRestaurantListingPage = lazy(() => import('../features/catalog/pages/RestaurantListingPage'));
 
 const LazyRestaurantDetailShell = lazy(() => import('../pages/premium/pages/RestaurantDetailShell'));

@@ -39,7 +39,7 @@ export default function AppNavbar() {
   };
 
   return (
-    <nav className="sticky top-0 left-0 w-full z-50 flex justify-between items-center px-4 sm:px-8 lg:px-16 py-5 bg-[#050505]/80 backdrop-blur-md border-b border-white/10">
+    <nav className="sticky top-0 left-0 w-full z-50 flex justify-between items-center px-6 sm:px-8 lg:px-20 py-5 bg-[#050505]/80 backdrop-blur-md border-b border-white/10">
       <Link to="/home" className="text-2xl font-bold text-white tracking-tighter">
         Dine<span className="text-[#FF7A00]">Express</span>
       </Link>

@@ -16,7 +16,7 @@ const FilterBar = ({ onFilterChange }) => {
   }, [category, distance, rating, onFilterChange]);
 
   return (
-    <div className="bg-[#141414] border border-white/5 rounded-[2rem] p-6 mb-8 shadow-xl">
+    <div className="bg-[#161616] border border-[#2A2A2A] rounded-2xl p-6 mb-8 shadow-xl">
       <div className="flex items-center gap-3 mb-6 border-b border-white/5 pb-4">
         <SlidersHorizontal className="text-[#D33F0F]" size={18} />
         <h4 className="text-sm font-bold uppercase tracking-wider text-gray-200">Refine Search Feed</h4>
@@ -69,7 +69,7 @@ const FilterBar = ({ onFilterChange }) => {
             className="w-full bg-white/5 border border-white/5 text-sm font-medium text-gray-200 rounded-xl h-11 px-4 focus:outline-none focus:border-[#D33F0F] transition-colors cursor-pointer"
           >
             {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat} className="bg-[#141414] text-white">
+              <option key={cat} value={cat} className="bg-[#161616] text-white">
                 {cat}
               </option>
             ))}

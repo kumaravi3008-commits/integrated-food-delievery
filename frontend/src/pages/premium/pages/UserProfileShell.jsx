@@ -5,6 +5,7 @@ export default function UserProfileShell() {
     <PlaceholderPremiumPage
       title="User Profile"
       subtitle="Manage your account, preferences and profile info."
+      layout="dashboard"
     />
   );
 }

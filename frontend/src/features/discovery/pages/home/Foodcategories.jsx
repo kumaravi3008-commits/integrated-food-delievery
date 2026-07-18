@@ -4,20 +4,19 @@ import { CATEGORIES } from "./homeData";
 
 export default function FoodCategories() {
   return (
-    <section className="relative w-full py-10">
+    <section className="relative w-full py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-14"
-          style={{ paddingTop: "2rem", marginBottom: "8rem" }}
+          className="text-center max-w-xl mb-16 sm:mb-20"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Craving something?
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-3">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
             Browse by category
           </h2>
         </motion.div>
@@ -27,9 +26,9 @@ export default function FoodCategories() {
           whileInView="visible"
           viewport={viewport}
           variants={staggerContainer(0.06)}
-          className="w-full overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="w-full overflow-x-auto pb-4 hide-scrollbar"
         >
-          <div className="flex gap-9 w-max mx-auto px-2">
+          <div className="flex gap-6 sm:gap-9 w-max mx-auto px-2">
             {CATEGORIES.map((cat) => {
               const Icon = cat.icon;
               return (
@@ -44,9 +43,8 @@ export default function FoodCategories() {
                   }}
                   style={{ transformStyle: "preserve-3d", perspective: 800 }}
                   onClick={() => (window.location.href = '/categories')}
-                  className="flex flex-col items-center justify-center gap-3 w-32 h-32 shrink-0 rounded-2xl bg-[#161616] border border-[#2A2A2A] cursor-pointer transition-colors hover:border-[#FF7A00]/50"
+                  className="flex flex-col items-center justify-center gap-3 w-28 sm:w-32 h-28 sm:h-32 shrink-0 rounded-2xl bg-[#161616] border border-[#2A2A2A] cursor-pointer transition-colors hover:border-[#FF7A00]/50"
                 >
-
                   <motion.div
                     whileHover={{ scale: 1.2, rotate: [0, -8, 8, 0] }}
                     transition={{ duration: 0.5 }}

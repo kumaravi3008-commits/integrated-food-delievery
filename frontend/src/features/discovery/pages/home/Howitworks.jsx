@@ -7,20 +7,19 @@ const STEP_ICONS = [Store, ShoppingBag, PackageCheck];
 
 export default function HowItWorks() {
   return (
-    <section className="relative w-full py-10">
+    <section className="relative w-full py-16 sm:py-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mx-auto"
-          style={{ paddingTop: "2rem", marginBottom: "8rem" }}
+          className="text-center max-w-xl mx-auto mb-16 sm:mb-20"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Simple by design
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
             How it works
           </h2>
         </motion.div>
@@ -30,7 +29,7 @@ export default function HowItWorks() {
           whileInView="visible"
           viewport={viewport}
           variants={staggerContainer(0.2)}
-          className="relative grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 w-full justify-items-center"
+          className="relative grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-8 w-full"
         >
           {/* Connecting dotted line, desktop only */}
           <div className="hidden sm:block absolute top-9 left-[16.5%] right-[16.5%] h-px border-t-2 border-dotted border-[#2A2A2A]" />

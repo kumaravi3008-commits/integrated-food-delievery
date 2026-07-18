@@ -4,9 +4,7 @@ import PremiumPageShell from '../PremiumPageShell';
 import PremiumCard from '../PremiumCard';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
-
-// Backend read-only currently exposes only `POST /auth/reset-password` (no OTP/send-link endpoint).
-// This screen will still collect email and use reset-password flow if a `newPassword` is provided.
+import PageLayout from '../../../components/layout/PageLayout';
 
 export default function ForgotPasswordShell() {
   const [email, setEmail] = useState('');
@@ -21,7 +19,7 @@ export default function ForgotPasswordShell() {
     setLoading(true);
 
     try {
-      setInfo('Use “Reset Password” to set a new password in this backend version.');
+      setInfo('Use "Reset Password" to set a new password in this backend version.');
       setTimeout(() => {
         window.location.assign(`/reset-password?email=${encodeURIComponent(email || '')}`);
       }, 1000);
@@ -36,12 +34,13 @@ export default function ForgotPasswordShell() {
     <PremiumPageShell
       title="Forgot Password"
       subtitle="Request a password reset link."
+      layout="auth"
     >
-      <div className="w-full max-w-md mx-auto">
-        <PremiumCard className="p-6">
-          <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <PageLayout.Centered>
+        <PremiumCard className="p-6 sm:p-8">
+          <form onSubmit={onSubmit} className="flex flex-col gap-6">
             <div>
-              <div className="text-sm font-extrabold text-white/80">Email</div>
+              <div className="text-sm font-extrabold text-white/80 mb-2">Email</div>
               <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -63,13 +62,12 @@ export default function ForgotPasswordShell() {
               </div>
             ) : null}
 
-            <Button disabled={loading} className="mt-2">
+            <Button disabled={loading} className="w-full">
               {loading ? 'Redirecting...' : 'Continue'}
             </Button>
           </form>
         </PremiumCard>
-      </div>
+      </PageLayout.Centered>
     </PremiumPageShell>
   );
 }
-

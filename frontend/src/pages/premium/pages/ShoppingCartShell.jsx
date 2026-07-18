@@ -5,6 +5,7 @@ export default function ShoppingCartShell() {
     <PlaceholderPremiumPage
       title="Shopping Cart"
       subtitle="Review items and adjust quantities."
+      layout="ecommerce"
     />
   );
 }

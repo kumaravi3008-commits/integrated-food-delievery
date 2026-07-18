@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import AppNavbar from './AppNavbar';
 import CartDrawer from '../../features/checkout-cart/components/CartDrawer';
+import Footer from './Footer/Footer';
 
 export default function AppLayout({ showFooter = false, children }) {
   return (
@@ -8,7 +9,7 @@ export default function AppLayout({ showFooter = false, children }) {
       <AppNavbar />
       <main className="flex-1 w-full">{children || <Outlet />}</main>
       <CartDrawer />
-      {showFooter ? null : null}
+      {showFooter && <Footer />}
     </div>
   );
 }

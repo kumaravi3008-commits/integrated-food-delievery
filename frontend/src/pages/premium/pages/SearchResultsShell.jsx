@@ -4,6 +4,7 @@ import { Search, XCircle } from 'lucide-react';
 
 import PremiumPageShell from '../PremiumPageShell';
 import PremiumCard from '../PremiumCard';
+import PageLayout from '../../../components/layout/PageLayout';
 import { listRestaurants } from '../../../services/discoveryService';
 
 function useDebouncedValue(value, delay = 350) {
@@ -33,8 +34,6 @@ export default function SearchResultsShell() {
   const q = debouncedQuery.trim();
 
   const apiParams = useMemo(() => {
-    // Backend is expected to support a generic query via `q`.
-    // If backend uses different param name, adjust later.
     return q ? { q } : {};
   }, [q]);
 
@@ -94,118 +93,105 @@ export default function SearchResultsShell() {
 
   useEffect(() => {
     submitToUrl(query);
-    // Keep this effect stable on mount; we intentionally don't include submitToUrl in deps.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   return (
     <PremiumPageShell
       title="Search"
-      subtitle={q ? `Results for “${q}”` : 'Search restaurants and dishes'}
+      subtitle={q ? `Results for "${q}"` : 'Search restaurants and dishes'}
     >
-      <div className="w-full flex flex-col gap-5">
-        <PremiumCard className="p-5">
-          <div className="flex flex-col md:flex-row gap-3 md:items-center">
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={18} />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search restaurants or dishes"
-                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#FF7A00]/60"
-              />
-            </div>
+      <PageLayout maxWidth="lg">
+        <div className="w-full flex flex-col gap-6">
+          <PremiumCard className="p-5 sm:p-6">
+            <div className="flex flex-col md:flex-row gap-3 md:items-center">
+              <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" size={18} />
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search restaurants or dishes"
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-sm outline-none focus:border-[#FF7A00]/60"
+                />
+              </div>
 
-            <div className="flex gap-2">
-              {query.trim() ? (
+              <div className="flex gap-2">
+                {query.trim() ? (
+                  <button
+                    type="button"
+                    onClick={clearQuery}
+                    className="px-4 py-3 rounded-2xl bg-white/[0.03] border border-white/10 text-sm hover:border-[#FF7A00]/50 transition-colors"
+                    aria-label="Clear search"
+                  >
+                    <XCircle size={18} className="inline-block -mt-[2px] mr-1" />
+                    Clear
+                  </button>
+                ) : null}
+
                 <button
                   type="button"
-                  onClick={clearQuery}
-                  className="px-4 py-3 rounded-2xl bg-white/[0.03] border border-white/10 text-sm hover:border-[#FF7A00]/50 transition-colors"
-                  aria-label="Clear search"
+                  onClick={() => submitToUrl(query)}
+                  className="px-4 py-3 rounded-2xl bg-[#FF7A00] text-black font-extrabold text-sm hover:bg-[#d96600] transition-colors"
                 >
-                  <XCircle size={18} className="inline-block -mt-[2px] mr-1" />
-                  Clear
+                  Search
                 </button>
-              ) : null}
-
-              <button
-                type="button"
-                onClick={() => submitToUrl(query)}
-                className="px-4 py-3 rounded-2xl bg-[#FF7A00] text-black font-extrabold text-sm hover:bg-[#d96600] transition-colors"
-              >
-                Search
-              </button>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-3 text-xs text-white/60 leading-relaxed">
-            {loading
-              ? 'Searching...'
-              : q
-                ? `Showing restaurants that match “${q}”.`
-                : 'Type a keyword to start searching.'}
-          </div>
-        </PremiumCard>
-
-        {error ? (
-          <PremiumCard className="p-6 border border-red-500/20 bg-red-500/5">
-            <div className="text-sm text-red-300 font-extrabold">Error</div>
-            <div className="mt-2 text-sm text-white/70">{error}</div>
+            <div className="mt-3 text-xs text-white/60 leading-relaxed">
+              {loading
+                ? 'Searching...'
+                : q
+                  ? `Showing restaurants that match "${q}".`
+                  : 'Type a keyword to start searching.'}
+            </div>
           </PremiumCard>
-        ) : null}
 
-        {!loading && q && results.length === 0 && !error ? (
-          <PremiumCard className="p-6">
-            <div className="text-sm font-extrabold">No Results</div>
-            <div className="mt-2 text-sm text-white/70">Try a different keyword (e.g., restaurant name or cuisine).</div>
-          </PremiumCard>
-        ) : null}
+          {error ? (
+            <PageLayout.Error error={error} />
+          ) : null}
 
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[...Array(6)].map((_, i) => (
-              <PremiumCard key={i} className="p-5 animate-pulse">
-                <div className="h-40 bg-white/5 rounded-2xl" />
-                <div className="mt-3 h-4 bg-white/10 rounded" />
-                <div className="mt-2 h-3 w-2/3 bg-white/10 rounded" />
-              </PremiumCard>
-            ))}
-          </div>
-        ) : null}
+          {!loading && q && results.length === 0 && !error ? (
+            <PageLayout.Empty
+              title="No Results"
+              description="Try a different keyword (e.g., restaurant name or cuisine)."
+            />
+          ) : null}
 
-        {!loading && results.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {results.map((r) => (
-              <PremiumCard key={r.id || r._id} className="p-5">
-                <button
-                  type="button"
-                  className="text-left w-full"
-                  onClick={() => navigate(`/restaurants/${r.id || r._id}`)}
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="text-base font-extrabold tracking-tight">{r.name}</div>
-                      <div className="mt-1 text-sm text-white/70">{r.cuisine || r.cuisineType}</div>
+          {loading ? (
+            <PageLayout.Skeleton count={6} cols={3} />
+          ) : null}
+
+          {!loading && results.length > 0 ? (
+            <PageLayout.Grid cols={3} gap={6}>
+              {results.map((r) => (
+                <PremiumCard key={r.id || r._id} className="p-5 sm:p-6">
+                  <button
+                    type="button"
+                    className="text-left w-full"
+                    onClick={() => navigate(`/restaurants/${r.id || r._id}`)}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="text-base font-extrabold tracking-tight">{r.name}</div>
+                        <div className="mt-1 text-sm text-white/70">{r.cuisine || r.cuisineType}</div>
+                      </div>
+                      <div className="text-xs font-bold px-3 py-1 rounded-full border border-white/10 bg-white/[0.02] text-white/70">
+                        {r.priceTier || '$$'}
+                      </div>
                     </div>
-                    <div className="text-xs font-bold px-3 py-1 rounded-full border border-white/10 bg-white/[0.02] text-white/70">
-                      {r.priceTier || '$$'}
-                    </div>
-                  </div>
 
-                  <div className="mt-4 flex items-center justify-between text-sm text-white/60 border-t border-white/10 pt-3">
-                    <span>{typeof r.rating === 'number' ? `⭐ ${r.rating.toFixed(1)}` : '⭐'}</span>
-                    <span>{r.etaMins ? `${r.etaMins} min` : ''}</span>
-                  </div>
-                </button>
-              </PremiumCard>
-            ))}
-          </div>
-        ) : null}
-      </div>
+                    <div className="mt-4 flex items-center justify-between text-sm text-white/60 border-t border-white/10 pt-3">
+                      <span>{typeof r.rating === 'number' ? `⭐ ${r.rating.toFixed(1)}` : '⭐'}</span>
+                      <span>{r.etaMins ? `${r.etaMins} min` : ''}</span>
+                    </div>
+                  </button>
+                </PremiumCard>
+              ))}
+            </PageLayout.Grid>
+          ) : null}
+        </div>
+      </PageLayout>
     </PremiumPageShell>
   );
 }
-
-

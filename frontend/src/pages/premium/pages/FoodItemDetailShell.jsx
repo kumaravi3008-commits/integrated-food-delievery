@@ -89,6 +89,7 @@ export default function FoodItemDetailShell() {
     <PremiumPageShell
       title={food.name}
       subtitle={food.vegetarian ? 'Vegetarian •' : 'Non-Vegetarian •'}
+      layout="detail"
     >
       <div className="w-full flex flex-col gap-7">
         {/* Gallery + info */}

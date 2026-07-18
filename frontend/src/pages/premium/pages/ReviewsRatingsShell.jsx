@@ -5,6 +5,7 @@ export default function ReviewsRatingsShell() {
     <PlaceholderPremiumPage
       title="Reviews & Ratings"
       subtitle="Rate restaurants and share feedback."
+      layout="dashboard"
     />
   );
 }

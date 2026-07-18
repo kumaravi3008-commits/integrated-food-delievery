@@ -1,20 +1,25 @@
 import PremiumPageShell from '../PremiumPageShell';
+import PageLayout from '../../../components/layout/PageLayout';
+import PremiumCard from '../PremiumCard';
 
 export default function OtpShell() {
-  // Backend read-only inspected does not expose OTP verification routes in the files provided.
-  // Keep UI route available; users will proceed via login/reset endpoints.
   return (
     <PremiumPageShell
       title="OTP Verification"
       subtitle="Enter the OTP sent to your phone/email."
+      layout="auth"
     >
-      <div className="rounded-3xl bg-white/[0.03] border border-white/10 p-6 text-white/70 text-sm leading-relaxed">
-        OTP verification screen is a UI placeholder for this backend version.
-        <div className="mt-3">
-          Use Login/Register/Reset Password flows to access your account.
-        </div>
-      </div>
+      <PageLayout.Centered>
+        <PremiumCard className="p-6 sm:p-8">
+          <div className="text-white font-bold text-base mb-3">OTP Verification</div>
+          <div className="mb-3 text-white/70 text-sm leading-relaxed">
+            OTP verification screen is a UI placeholder for this backend version.
+          </div>
+          <div className="text-white/70 text-sm">
+            Use Login/Register/Reset Password flows to access your account.
+          </div>
+        </PremiumCard>
+      </PageLayout.Centered>
     </PremiumPageShell>
   );
 }
-

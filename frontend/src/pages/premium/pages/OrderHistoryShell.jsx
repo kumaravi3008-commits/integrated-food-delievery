@@ -5,6 +5,7 @@ export default function OrderHistoryShell() {
     <PlaceholderPremiumPage
       title="Order History"
       subtitle="View and reorder previous orders."
+      layout="dashboard"
     />
   );
 }

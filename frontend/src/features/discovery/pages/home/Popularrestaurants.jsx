@@ -14,23 +14,19 @@ export default function PopularRestaurants() {
   };
 
   return (
-    <section id="restaurants" className="relative w-full py-16">
+    <section id="restaurants" className="relative w-full py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl"
-          style={{
-            paddingTop: "2rem",
-            marginBottom: "8rem",
-          }}
+          className="text-center max-w-xl mb-16 sm:mb-20"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
             Highly rated
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mt-4">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
             Popular restaurants near you
           </h2>
         </motion.div>
@@ -47,9 +43,9 @@ export default function PopularRestaurants() {
               key={res.id}
               variants={fadeUp}
               whileHover={{ y: -8 }}
-              className="group relative bg-[#161616] border border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col transition-colors hover:border-[#FF7A00]/40"
+              className="group relative bg-[#161616] border border-[#2A2A2A] rounded-2xl overflow-hidden flex flex-col transition-colors hover:border-[#FF7A00]/40 h-full"
             >
-              <div className="relative h-40 overflow-hidden">
+              <div className="relative h-40 sm:h-44 overflow-hidden">
                 <motion.img
                   src={res.image}
                   alt={res.name}
@@ -85,7 +81,7 @@ export default function PopularRestaurants() {
                 </motion.button>
               </div>
 
-              <div className="p-4 flex flex-col gap-3 flex-1">
+              <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="text-sm font-semibold text-white leading-tight">
@@ -99,7 +95,7 @@ export default function PopularRestaurants() {
                   <p className="text-xs text-gray-500 mt-1">{res.cuisine}</p>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-gray-500 border-t border-[#2A2A2A] pt-3">
+                <div className="flex items-center justify-between text-[11px] text-gray-500 border-t border-[#2A2A2A] pt-3 mt-auto">
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3 text-[#FF7A00]" />
                     {res.time}
@@ -114,11 +110,10 @@ export default function PopularRestaurants() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => (window.location.href = `/restaurants/${res.id}`)}
-                  className="mt-1 bg-[#FF7A00] hover:bg-[#FF8F1F] text-white text-xs font-semibold py-2.5 rounded-lg transition-colors"
+                  className="bg-[#FF7A00] hover:bg-[#FF8F1F] text-white text-xs font-semibold py-2.5 rounded-lg transition-colors w-full"
                 >
                   Order now
                 </motion.button>
-
               </div>
             </motion.div>
           ))}

@@ -5,6 +5,7 @@ export default function SavedAddressesShell() {
     <PlaceholderPremiumPage
       title="Saved Addresses"
       subtitle="Keep your delivery locations organized."
+      layout="dashboard"
     />
   );
 }

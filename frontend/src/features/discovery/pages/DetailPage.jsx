@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 // - removing unused state variables
 // - computing derived total price via useMemo instead of setState in an effect
 
+import RestaurantLayout from '../../../components/layout/purpose/RestaurantLayout';
+
 export default function FoodDetailPage() {
   const { id } = useParams();
 
@@ -81,9 +83,12 @@ export default function FoodDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#F3F4F6] relative overflow-x-hidden font-sans pb-16 flex flex-col items-center select-none">
-      <div className="w-full max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+    <RestaurantLayout showFooter={false}>
+      <div className="py-10">
         <div className="flex flex-col md:flex-row gap-6 md:items-start">
+
+
+
           <div className="flex-1">
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               {foodData?.name || 'Food Item'}
@@ -140,7 +145,10 @@ export default function FoodDetailPage() {
 
         {/* TODO: replace placeholder with full premium food detail UI */}
       </div>
-    </div>
+    </RestaurantLayout>
+
   );
 }
+
+
 

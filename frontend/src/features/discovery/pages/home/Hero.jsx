@@ -57,7 +57,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* LEFT CONTENT */}
         <motion.div
           variants={staggerContainer(0.12)}
@@ -85,82 +85,80 @@ export default function Hero() {
             tap.
           </p>
 
-          <div className="flex flex-wrap items-center gap-5 pt-3">
-            <div className="flex flex-wrap items-center gap-5 pt-3">
-              {/* Order Food */}
-              <button
-                onClick={() => setSearchMode("order")}
-                className={`group relative overflow-hidden
-      min-w-[240px]
-      px-14 py-6
-      rounded-2xl
-      font-medium
-      text-[13px]
-      uppercase
-      tracking-[0.12em]
-      transition-all
-      duration-300
-      backdrop-blur-2xl
-      border
-      ${
-        searchMode === "order"
-          ? "bg-gradient-to-r from-[#FF7A00]/35 via-[#FF8A00]/25 to-[#FF7A00]/20 border-[#FF8A00]/70 text-white shadow-[0_15px_45px_rgba(255,122,0,0.35)]"
-          : "bg-white/[0.05] border-white/10 text-gray-300 hover:bg-[#FF7A00]/10 hover:border-[#FF7A00]/40 hover:text-white hover:shadow-[0_15px_35px_rgba(255,122,0,0.18)]"
-      }`}
-              >
-                {/* Glass Shine */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-60"></div>
+          <div className="flex flex-wrap items-center gap-4 pt-3">
+            {/* Order Food */}
+            <button
+              onClick={() => setSearchMode("order")}
+              className={`group relative overflow-hidden
+    min-w-[200px] sm:min-w-[220px]
+    px-8 sm:px-10 py-5 sm:py-6
+    rounded-2xl
+    font-medium
+    text-[12px] sm:text-[13px]
+    uppercase
+    tracking-[0.12em]
+    transition-all
+    duration-300
+    backdrop-blur-2xl
+    border
+    ${
+      searchMode === "order"
+        ? "bg-gradient-to-r from-[#FF7A00]/35 via-[#FF8A00]/25 to-[#FF7A00]/20 border-[#FF8A00]/70 text-white shadow-[0_15px_45px_rgba(255,122,0,0.35)]"
+        : "bg-white/[0.05] border-white/10 text-gray-300 hover:bg-[#FF7A00]/10 hover:border-[#FF7A00]/40 hover:text-white hover:shadow-[0_15px_35px_rgba(255,122,0,0.18)]"
+    }`}
+            >
+              {/* Glass Shine */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-60"></div>
 
-                {/* Top Highlight */}
-                <div className="absolute top-0 left-0 w-full h-px bg-white/40"></div>
+              {/* Top Highlight */}
+              <div className="absolute top-0 left-0 w-full h-px bg-white/40"></div>
 
-                {/* Bottom Glow */}
-                <div className="absolute -bottom-10 left-1/2 h-20 w-20 -translate-x-1/2 rounded-full bg-[#FF7A00]/20 blur-3xl"></div>
+              {/* Bottom Glow */}
+              <div className="absolute -bottom-10 left-1/2 h-20 w-20 -translate-x-1/2 rounded-full bg-[#FF7A00]/20 blur-3xl"></div>
 
-                {/* Content */}
-                <span className="relative flex items-center justify-center">
-                  Order Food
-                </span>
-              </button>
+              {/* Content */}
+              <span className="relative flex items-center justify-center">
+                Order Food
+              </span>
+            </button>
 
-              {/* Explore Restaurants */}
-              <button
-                onClick={() => setSearchMode("explore")}
-                className={`group relative overflow-hidden
-      min-w-[240px]
-      px-14 py-6
-      rounded-2xl
-      font-medium
-      text-[13px]
-      uppercase
-      tracking-[0.12em]
-      transition-all
-      duration-300
-      backdrop-blur-2xl
-      border
-      ${
-        searchMode === "explore"
-          ? "bg-gradient-to-r from-[#FF7A00]/35 via-[#FF8A00]/25 to-[#FF7A00]/20 border-[#FF8A00]/70 text-white shadow-[0_15px_45px_rgba(255,122,0,0.35)]"
-          : "bg-white/[0.05] border-white/10 text-gray-300 hover:bg-[#FF7A00]/10 hover:border-[#FF7A00]/40 hover:text-white hover:shadow-[0_15px_35px_rgba(255,122,0,0.18)]"
-      }`}
-              >
-                {/* Glass Shine */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-60"></div>
+            {/* Explore Restaurants */}
+            <button
+              onClick={() => setSearchMode("explore")}
+              className={`group relative overflow-hidden
+    min-w-[200px] sm:min-w-[220px]
+    px-8 sm:px-10 py-5 sm:py-6
+    rounded-2xl
+    font-medium
+    text-[12px] sm:text-[13px]
+    uppercase
+    tracking-[0.12em]
+    transition-all
+    duration-300
+    backdrop-blur-2xl
+    border
+    ${
+      searchMode === "explore"
+        ? "bg-gradient-to-r from-[#FF7A00]/35 via-[#FF8A00]/25 to-[#FF7A00]/20 border-[#FF8A00]/70 text-white shadow-[0_15px_45px_rgba(255,122,0,0.35)]"
+        : "bg-white/[0.05] border-white/10 text-gray-300 hover:bg-[#FF7A00]/10 hover:border-[#FF7A00]/40 hover:text-white hover:shadow-[0_15px_35px_rgba(255,122,0,0.18)]"
+    }`}
+            >
+              {/* Glass Shine */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-60"></div>
 
-                {/* Top Highlight */}
-                <div className="absolute top-0 left-0 w-full h-px bg-white/40"></div>
+              {/* Top Highlight */}
+              <div className="absolute top-0 left-0 w-full h-px bg-white/40"></div>
 
-                {/* Bottom Glow */}
-                <div className="absolute -bottom-10 left-1/2 h-20 w-20 -translate-x-1/2 rounded-full bg-[#FF7A00]/20 blur-3xl"></div>
+              {/* Bottom Glow */}
+              <div className="absolute -bottom-10 left-1/2 h-20 w-20 -translate-x-1/2 rounded-full bg-[#FF7A00]/20 blur-3xl"></div>
 
-                {/* Content */}
-                <span className="relative flex items-center justify-center">
-                  Explore Restaurants
-                </span>
-              </button>
-            </div>
+              {/* Content */}
+              <span className="relative flex items-center justify-center">
+                Explore Restaurants
+              </span>
+            </button>
           </div>
-          <div className="mt-4 bg-[#111111]/80 backdrop-blur-xl border border-[#2A2A2A] rounded-2xl p-2 flex flex-col sm:flex-row items-stretch gap-2 shadow-2xl max-w-xl">
+          <div className="mt-6 bg-[#111111]/80 backdrop-blur-xl border border-[#2A2A2A] rounded-2xl p-2 flex flex-col sm:flex-row items-stretch gap-2 shadow-2xl max-w-xl w-full">
             <div className="flex items-center gap-2.5 px-4 py-3 border-b sm:border-b-0 sm:border-r border-[#2A2A2A] sm:w-[34%]">
               <MapPin className="w-4 h-4 text-[#FF7A00] shrink-0" />
               <input

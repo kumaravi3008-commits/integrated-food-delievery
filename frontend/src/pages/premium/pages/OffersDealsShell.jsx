@@ -5,6 +5,7 @@ export default function OffersDealsShell() {
     <PlaceholderPremiumPage
       title="Offers & Deals"
       subtitle="Limited time discounts curated for you."
+      layout="ecommerce"
     />
   );
 }

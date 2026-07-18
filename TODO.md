@@ -1,40 +1,42 @@
-# DineExpress - Frontend Backend Connectivity TODO
+# Frontend Layout Refactor - DineExpress
 
-## Step 1: Audit & map APIs
-- [x] Inspect existing routing (`frontend/src/routes/AppRoutes.jsx`) and global axios auth behavior.
-- [x] Inspect discovery/catalog pages for mock data and placeholder calls.
-- [ ] Inspect premium Shell pages for disconnected UI / dummy/mock usage.
-- [ ] Inspect cart/checkout/order/profile/wishlist implementations for backend wiring.
+## Step 1: Create purpose-specific layout wrappers (Phase 1)
+- [x] Add `MarketingLayout.jsx`
+- [x] Add `AuthLayout.jsx`
+- [x] Add `RestaurantLayout.jsx`
+- [x] Add `DashboardLayout.jsx`
+- [x] Add `CheckoutLayout.jsx`
 
-## Step 2: Discovery / Home / Restaurants
-- [ ] Connect Restaurant listing to backend (`frontend/src/services/discoveryService.js`).
-- [ ] Connect restaurant card navigation (and ensure RestaurantDetailShell uses menus API).
-- [ ] Remove/replace `mockRestaurants` usage.
 
-## Step 3: Food detail, customization, cart
-- [ ] Replace placeholder FoodDetailPage logic with backend integration.
-- [ ] Wire “Add to Cart” to Redux/cartService endpoints.
-- [ ] Ensure cart drawer/badge updates from Redux.
+## Step 2: Fix Navbar/Footer container alignment
+- [ ] Update `Navbar.jsx` to use shared container padding
+- [ ] Update `Footer.jsx` to use shared container width + spacing
 
-## Step 4: Search
-- [ ] Implement live search using backend endpoints.
-- [ ] Ensure `/search` page shows loading/empty/error and supports retry.
+## Step 3: Update Home/Welcome to use MarketingLayout
+- [ ] Refactor `features/discovery/pages/Home/homepage.jsx`
+- [ ] Refactor `features/discovery/pages/WelcomePage.jsx`
 
-## Step 5: Location-based nearby
-- [ ] Wire current location button using `useGeolocation`.
-- [ ] Call nearby restaurants/offers APIs based on lat/lng.
-- [ ] Implement manual location selection + persistence if permission denied (connect existing UI).
 
-## Step 6: Navbar/Footer + auth state
-- [ ] Replace navbar static links/badges with correct React Router routes and Redux-driven cart/auth state.
-- [ ] Ensure logout/login flows update authentication state.
+## Step 4: Map premium shells to correct layout wrappers
+- [ ] Update `PremiumPageShell.jsx` to delegate to new wrappers (or add mappings)
+- [ ] Update auth shells (Login/Register/etc.) to AuthLayout
+- [ ] Update dashboard shells to DashboardLayout
+- [ ] Update checkout shells to CheckoutLayout
 
-## Step 7: Checkout & Orders end-to-end
-- [ ] Wire cart -> checkout -> place order -> success.
-- [ ] Wire order history and tracking pages.
-- [ ] Ensure rate/review hooks exist and connect (if backend provides endpoints).
+## Step 5: Landing page spacing/rhythm tuning
+- [ ] Increase vertical rhythm between landing sections
+- [ ] Normalize card/grid spacing and equal heights
 
-## Step 8: Final validation
-- [ ] Run lint + dev server.
-- [ ] Verify the full journey: Welcome → Login → Home → Location → Search → Restaurant → Menu → Food Detail → Cart → Checkout → Place Order → Success → Track → Profile → Logout.
+## Step 6: Shopping & e-commerce layout tuning
+- [ ] Restaurant listing/details/menu hierarchy + grid alignment
+- [ ] Two-column checkout with sticky summary on desktop
+
+## Step 7: Audit reusable components for adaptability
+- [ ] Adjust `PremiumCard`, `Button`, `Input`, `Card` (spacing/width constraints)
+- [ ] Ensure components don’t force generic paddings per page
+
+## Step 8: Full page-by-page visual audit
+- [ ] Verify: Home, Welcome, Discovery, Restaurant flows
+- [ ] Verify: Auth, Cart/Checkout, Profile pages, Policies/Help
+- [ ] Run final build/dev checks for layout regressions
 

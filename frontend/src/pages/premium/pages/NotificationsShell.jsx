@@ -5,6 +5,7 @@ export default function NotificationsShell() {
     <PlaceholderPremiumPage
       title="Notifications"
       subtitle="Order updates, offers and important messages."
+      layout="dashboard"
     />
   );
 }

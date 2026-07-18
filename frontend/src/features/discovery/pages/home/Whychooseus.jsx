@@ -41,8 +41,8 @@ export default function WhyChooseUs() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
-    <section ref={sectionRef} className="relative w-full py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+    <section ref={sectionRef} className="relative w-full py-16 sm:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
         {/* LEFT: illustration */}
         <motion.div
           initial="hidden"

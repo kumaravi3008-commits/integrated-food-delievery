@@ -4,6 +4,7 @@ import PremiumPageShell from '../PremiumPageShell';
 import PremiumCard from '../PremiumCard';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
+import PageLayout from '../../../components/layout/PageLayout';
 import * as authApi from '../../../services/authService';
 
 export default function ResetPasswordShell() {
@@ -36,12 +37,13 @@ export default function ResetPasswordShell() {
     <PremiumPageShell
       title="Reset Password"
       subtitle="Set your new password."
+      layout="auth"
     >
-      <div className="w-full max-w-md mx-auto">
-        <PremiumCard className="p-6">
-          <form onSubmit={onSubmit} className="flex flex-col gap-4">
+      <PageLayout.Centered>
+        <PremiumCard className="p-6 sm:p-8">
+          <form onSubmit={onSubmit} className="flex flex-col gap-6">
             <div>
-              <div className="text-sm font-extrabold text-white/80">Email</div>
+              <div className="text-sm font-extrabold text-white/80 mb-2">Email</div>
               <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -52,7 +54,7 @@ export default function ResetPasswordShell() {
             </div>
 
             <div>
-              <div className="text-sm font-extrabold text-white/80">New Password</div>
+              <div className="text-sm font-extrabold text-white/80 mb-2">New Password</div>
               <Input
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -74,13 +76,12 @@ export default function ResetPasswordShell() {
               </div>
             ) : null}
 
-            <Button disabled={loading} className="mt-2">
+            <Button disabled={loading} className="w-full">
               {loading ? 'Resetting...' : 'Reset Password'}
             </Button>
           </form>
         </PremiumCard>
-      </div>
+      </PageLayout.Centered>
     </PremiumPageShell>
   );
 }
-

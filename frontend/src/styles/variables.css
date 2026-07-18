@@ -1,0 +1,49 @@
+/* ============================================
+   DESIGN TOKENS — Single source of truth
+   ============================================ */
+:root {
+  /* --- Colors --- */
+  --color-bg: #050505;
+  --color-bg-alt: #0a0a0a;
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-accent: #FF7A00;
+  --color-accent-hover: #d96600;
+  --color-text: #ffffff;
+  --color-text-muted: rgba(255, 255, 255, 0.7);
+  --color-text-dim: rgba(255, 255, 255, 0.6);
+
+  /* --- Layout Max-Widths --- */
+  --layout-max-sm: 48rem;    /* 768px  — auth forms, single column */
+  --layout-max-md: 56rem;    /* 896px  — content cards */
+  --layout-max-lg: 64rem;    /* 1024px — grid listings */
+  --layout-max-xl: 72rem;    /* 1152px — detail pages */
+  --layout-max-2xl: 80rem;   /* 1280px — full width pages */
+  --layout-max-full: 1500px; /* max content width */
+
+  /* --- Horizontal Gutters (match Navbar/Footer) --- */
+  --gutter-xs: 1rem;    /* 16px  — mobile */
+  --gutter-sm: 2rem;    /* 32px  — tablet */
+  --gutter-lg: 5rem;    /* 80px  — desktop */
+
+  /* --- Section Spacing --- */
+  --section-py: 5rem;
+  --section-py-sm: 6rem;
+  --section-py-lg: 6rem;
+
+  /* --- Card Padding --- */
+  --card-padding: 1.5rem;
+  --card-padding-sm: 2rem;
+  --card-padding-lg: 2.5rem;
+
+  /* --- Border Radius --- */
+  --radius-sm: 0.75rem;   /* 12px */
+  --radius-md: 1rem;      /* 16px */
+  --radius-lg: 1.5rem;    /* 24px */
+  --radius-xl: 1.75rem;   /* 28px */
+  --radius-2xl: 2rem;     /* 32px */
+
+  /* --- Typography --- */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}

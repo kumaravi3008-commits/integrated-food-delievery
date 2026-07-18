@@ -5,6 +5,7 @@ export default function CheckoutShell() {
     <PlaceholderPremiumPage
       title="Checkout"
       subtitle="Confirm address, payment method and submit order."
+      layout="ecommerce"
     />
   );
 }

@@ -4,14 +4,14 @@ import { fadeUp, viewport } from "./animations";
 
 export default function CTA() {
   return (
-    <section className="relative w-full py-10">
+    <section className="relative w-full py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="relative overflow-hidden rounded-[2rem] border border-[#2A2A2A] bg-[#111111]/80 backdrop-blur-xl px-8 py-16 sm:px-16 sm:py-20 flex flex-col items-center text-center gap-8"
+          className="relative overflow-hidden rounded-[2rem] border border-[#2A2A2A] bg-[#111111]/80 backdrop-blur-xl px-6 sm:px-16 py-14 sm:py-20 flex flex-col items-center text-center gap-8"
         >
           {/* Animated gradient + floating blobs */}
           <motion.div

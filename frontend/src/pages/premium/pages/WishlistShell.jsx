@@ -5,6 +5,7 @@ export default function WishlistShell() {
     <PlaceholderPremiumPage
       title="Wishlist"
       subtitle="Save your favorite items and restaurants."
+      layout="dashboard"
     />
   );
 }

@@ -5,6 +5,7 @@ export default function OrderSuccessShell() {
     <PlaceholderPremiumPage
       title="Order Success"
       subtitle="Your order has been placed successfully."
+      layout="ecommerce"
     />
   );
 }

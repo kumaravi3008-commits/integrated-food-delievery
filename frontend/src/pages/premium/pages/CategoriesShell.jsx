@@ -5,6 +5,7 @@ export default function CategoriesShell() {
     <PlaceholderPremiumPage
       title="Categories"
       subtitle="Explore cuisine and dietary categories."
+      layout="ecommerce"
     />
   );
 }

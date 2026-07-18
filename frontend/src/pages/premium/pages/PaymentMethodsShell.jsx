@@ -5,6 +5,7 @@ export default function PaymentMethodsShell() {
     <PlaceholderPremiumPage
       title="Payment Methods"
       subtitle="Add and manage your cards and payment options."
+      layout="ecommerce"
     />
   );
 }

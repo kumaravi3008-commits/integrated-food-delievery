@@ -5,6 +5,7 @@ export default function HelpSupportShell() {
     <PlaceholderPremiumPage
       title="Help & Support"
       subtitle="Find answers and contact support."
+      layout="content"
     />
   );
 }
