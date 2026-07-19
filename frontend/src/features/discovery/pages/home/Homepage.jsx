@@ -14,7 +14,7 @@ import CTA from "./Cta";
 export default function HomePage() {
   return (
     <MarketingLayout showFooter={true}>
-      <main className="bg-[#050505] text-white min-h-screen w-full overflow-x-hidden hide-scrollbar">
+      <main className="bg-[#050505] text-white min-h-screen w-full justify-center overflow-x-hidden hide-scrollbar">
         <PageLayout.Home>
           <div className="flex flex-col gap-10 sm:gap-14 lg:gap-16">
             <Hero />

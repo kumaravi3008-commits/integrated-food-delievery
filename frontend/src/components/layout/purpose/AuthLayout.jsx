@@ -18,15 +18,15 @@ export default function AuthLayout({
         <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[680px] h-[680px] bg-[#FF7A00]/10 blur-[80px] rounded-full pointer-events-none" />
         <div className="absolute -top-72 left-1/2 -translate-x-1/2 w-[520px] h-[520px] bg-white/[0.05] blur-[90px] rounded-full pointer-events-none" />
 
-        {/* Account for absolute navbar */}
-        <div className="pt-24 sm:pt-28 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-          <div style={{ maxWidth: cardMaxWidth }} className="w-full">
+        {/* Perfect centered column layout */}
+        <div className="min-h-[calc(100vh-6rem)] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+          <div style={{ maxWidth: cardMaxWidth }} className="w-full flex flex-col items-center justify-center">
             {children}
           </div>
         </div>
-
       </div>
     </AppLayout>
   );
 }
+
 

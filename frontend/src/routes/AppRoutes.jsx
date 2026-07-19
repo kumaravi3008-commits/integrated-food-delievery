@@ -1,12 +1,11 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-
 import WelcomePage from '../features/discovery/pages/WelcomePage';
 
 import PageTransition from '../components/motion/PageTransition';
 
-
+import ProtectedRoute from '../components/routing/ProtectedRoute';
 
 import PlaceholderPremiumPage from '../pages/premium/PlaceholderPremiumPage';
 import LoginShell from '../pages/premium/pages/LoginShell';
@@ -14,6 +13,8 @@ import RegisterShell from '../pages/premium/pages/RegisterShell';
 import OtpShell from '../pages/premium/pages/OtpShell';
 import ForgotPasswordShell from '../pages/premium/pages/ForgotPasswordShell';
 import ResetPasswordShell from '../pages/premium/pages/ResetPasswordShell';
+
+
 
 
 
@@ -127,103 +128,134 @@ const AppRoutes = () => {
         <Route
           path="/wishlist"
           element={
-            <RouteSuspense>
-              <LazyWishlistShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyWishlistShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
 
         {/* Checkout */}
         <Route
           path="/cart"
           element={
-            <RouteSuspense>
-              <LazyShoppingCartShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyShoppingCartShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/checkout"
           element={
-            <RouteSuspense>
-              <LazyCheckoutShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyCheckoutShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/order/success"
           element={
-            <RouteSuspense>
-              <LazyOrderSuccessShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyOrderSuccessShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/order/:id"
           element={
-            <RouteSuspense>
-              <LazyOrderTrackingShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyOrderTrackingShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/orders"
           element={
-            <RouteSuspense>
-              <LazyOrderHistoryShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyOrderHistoryShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
 
         {/* Account */}
         <Route
           path="/profile"
           element={
-            <RouteSuspense>
-              <LazyUserProfileShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyUserProfileShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/addresses"
           element={
-            <RouteSuspense>
-              <LazySavedAddressesShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazySavedAddressesShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/payment-methods"
           element={
-            <RouteSuspense>
-              <LazyPaymentMethodsShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyPaymentMethodsShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/notifications"
           element={
-            <RouteSuspense>
-              <LazyNotificationsShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyNotificationsShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/reviews"
           element={
-            <RouteSuspense>
-              <LazyReviewsRatingsShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazyReviewsRatingsShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/settings"
           element={
-            <RouteSuspense>
-              <LazySettingsShell />
-            </RouteSuspense>
+            <ProtectedRoute>
+              <RouteSuspense>
+                <LazySettingsShell />
+              </RouteSuspense>
+            </ProtectedRoute>
           }
         />
+
 
         {/* Support & Policies */}
         <Route
