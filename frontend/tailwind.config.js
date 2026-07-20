@@ -12,7 +12,7 @@ export default {
         'layout-lg': '64rem',
         'layout-xl': '72rem',
         'layout-2xl': '80rem',
-        'layout-full': '1500px',
+        'layout-full': '1600px',
       },
       spacing: {
         'gutter-xs': '1rem',

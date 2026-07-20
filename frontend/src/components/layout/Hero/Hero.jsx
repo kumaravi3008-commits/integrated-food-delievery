@@ -7,7 +7,7 @@ const Hero = () => {
       {/* Background Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[1000px] max-h-[1000px] bg-orange-600/10 blur-[160px] rounded-full pointer-events-none" />
 
-      {/* FULL-WIDTH RESPONSIVE CONTAINER */}
+      {/* FULL-WIDTH RESPONSIVE CONTAINER - aligned with page-container system */}
       <div className="w-full max-w-layout-full mx-auto px-6 sm:px-8 lg:px-20 grid lg:grid-cols-12 items-center gap-10 lg:gap-16 relative z-10">
         
         {/* LEFT CONTENT */}

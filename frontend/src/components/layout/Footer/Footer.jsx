@@ -2,14 +2,14 @@ import { Send, Share2, Globe } from 'lucide-react';
 
 const Footer = () => {
   return (
-<footer className="relative w-full bg-black border-t border-neutral-900 overflow-hidden flex justify-center">
+<footer className="relative w-full bg-black border-t border-neutral-900">
       
       {/* Background radial ambient glow to enhance the glass transparency depth */}
       <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-orange-600/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute -top-40 right-0 w-96 h-96 bg-white/[0.02] blur-[100px] rounded-full pointer-events-none" />
 
-      {/* Content container matching Navbar's exact padding and max-width */}
-      <div className="w-full max-w-7xl mx-auto relative z-10">
+      {/* Content container — page-container provides padding + max-width */}
+      <div className="page-container relative z-10">
         
         {/* Main Footer Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 items-start mb-16">

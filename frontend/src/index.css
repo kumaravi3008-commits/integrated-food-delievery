@@ -1,6 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
+/* ════════════════════════════════════════════════
+   GLOBAL ROOT RESET — ULTRA-HIGH SPECIFICITY
+   Override Vite/React/tailwind default constraints
+   ════════════════════════════════════════════════ */
+html,
+body,
+#root {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,10 +32,8 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #050505;
+  background-color: #000;
   color: #ffffff;
-  overflow-x: hidden;
-  width: 100%;
 }
 
 img {
@@ -82,12 +97,6 @@ a {
   }
 }
 
-/* Prevent horizontal overflow */
-#root {
-  overflow-x: hidden;
-  width: 100%;
-}
-
 /* ============================================
    UNIFIED LAYOUT UTILITY CLASSES
    ============================================ */
@@ -115,7 +124,7 @@ a {
 /* Max-width container with gutters */
 .page-container {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1600px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -133,6 +142,14 @@ a {
   .page-container {
     padding-left: 5rem;
     padding-right: 5rem;
+  }
+}
+
+/* Ultra-wide screen gutters remain capped */
+@media (min-width: 1800px) {
+  .page-container {
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 }
 

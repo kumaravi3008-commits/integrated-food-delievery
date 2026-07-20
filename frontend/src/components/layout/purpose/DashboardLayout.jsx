@@ -25,7 +25,8 @@ export default function DashboardLayout({
               containerMaxWidth === '4xl' && 'max-w-4xl',
               containerMaxWidth === 'lg' && 'max-w-lg',
               containerMaxWidth === '5xl' && 'max-w-5xl',
-              containerMaxWidth === '6xl' && 'max-w-6xl'
+              containerMaxWidth === '6xl' && 'max-w-6xl',
+              containerMaxWidth === '7xl' && 'max-w-7xl'
             )}
           >
             {children}

@@ -19,7 +19,7 @@
   --layout-max-lg: 64rem;    /* 1024px — grid listings */
   --layout-max-xl: 72rem;    /* 1152px — detail pages */
   --layout-max-2xl: 80rem;   /* 1280px — full width pages */
-  --layout-max-full: 1500px; /* max content width */
+  --layout-max-full: 1600px; /* max content width */
 
   /* --- Horizontal Gutters (match Navbar/Footer) --- */
   --gutter-xs: 1rem;    /* 16px  — mobile */

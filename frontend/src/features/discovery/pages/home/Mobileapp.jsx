@@ -17,10 +17,10 @@ const APP_FEATURES = [
 
 export default function MobileApp() {
   return (
-<section className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12 overflow-hidden">
+<section className="relative w-full bg-black flex justify-center items-center py-16 md:py-24 border-b border-neutral-900/50 overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#FF7A00]/10 blur-[130px] pointer-events-none" />
 
-      <div className="relative w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
         {/* LEFT: phone with floating screenshots */}
         <motion.div
           initial="hidden"

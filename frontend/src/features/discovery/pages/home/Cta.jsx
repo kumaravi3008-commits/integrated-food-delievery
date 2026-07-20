@@ -4,8 +4,8 @@ import { fadeUp, viewport } from "./animations";
 
 export default function CTA() {
   return (
-<section className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12">
-      <div className="w-full max-w-7xl mx-auto">
+<section className="w-full bg-black flex justify-center items-center py-16 md:py-24 border-b border-neutral-900/50">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -54,7 +54,18 @@ export default function CTA() {
               <motion.button
                 whileHover={{
                   scale: 1.04,
-                  // Slightly increased the shadow intensity on hover for better effect
+                  boxShadow: "0 20px 50px -12px rgba(255,122,0,0.6)",
+                }}
+                whileTap={{ scale: 0.96 }}
+                onClick={() => (window.location.href = '/restaurants')}
+                className="flex items-center gap-2 bg-[#FF7A00] text-white font-semibold text-sm px-7 py-3.5 rounded-xl transition-colors duration-300"
+              >
+                Get Started
+                <ArrowRight className="w-4 h-4" />
+              </motion.button>
+              <motion.button
+                whileHover={{
+                  scale: 1.04,
                   boxShadow: "0 20px 50px -12px rgba(255,122,0,0.6)",
                 }}
                 whileTap={{ scale: 0.96 }}
@@ -64,7 +75,6 @@ export default function CTA() {
                 Order now
                 <ArrowRight className="w-4 h-4" />
               </motion.button>
-
           </div>
         </motion.div>
       </div>

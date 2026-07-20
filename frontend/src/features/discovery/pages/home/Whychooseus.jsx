@@ -41,8 +41,8 @@ export default function WhyChooseUs() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
-<section ref={sectionRef} className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12">
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
+<section ref={sectionRef} className="w-full bg-black flex justify-center items-center py-16 md:py-24 border-b border-neutral-900/50">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
         {/* LEFT: illustration */}
         <motion.div
           initial="hidden"
@@ -89,7 +89,7 @@ export default function WhyChooseUs() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-2 gap-8"
           >
             {STATS.map((stat, idx) => {
               const Icon = STAT_ICONS[idx];
