@@ -38,9 +38,9 @@ export default function LoginShell() {
     <PremiumPageShell
       title="Login"
       subtitle="Sign in to continue using DineExpress."
+      layout="auth"
     >
-      <div className="w-full max-w-md mx-auto">
-        <PremiumCard className="p-6">
+      <PremiumCard className="p-6">
           <form onSubmit={onSubmit} className="flex flex-col gap-4">
             <div>
               <div className="text-sm font-extrabold text-white/80">Email</div>
@@ -84,7 +84,6 @@ export default function LoginShell() {
             </div>
           </form>
         </PremiumCard>
-      </div>
     </PremiumPageShell>
   );
 }

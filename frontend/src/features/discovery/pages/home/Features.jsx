@@ -4,19 +4,19 @@ import { FEATURES } from "./homeData";
 
 export default function Features() {
   return (
-    <section className="relative w-full py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+<section className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12">
+      <div className="w-full max-w-7xl mx-auto flex flex-col gap-12">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-16 sm:mb-20"
+          className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
+          <span className="text-orange-500 uppercase font-bold text-xs tracking-wider block mb-2">
             Why it works
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          </span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white">
             Built for how you actually eat
           </h2>
         </motion.div>
@@ -25,7 +25,7 @@ export default function Features() {
           whileInView="visible"
           viewport={viewport}
           variants={staggerContainer(0.1)}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 w-full"
         >
           {FEATURES.map((feature) => {
             const Icon = feature.icon;

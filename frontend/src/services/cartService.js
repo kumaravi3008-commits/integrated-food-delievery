@@ -1,21 +1,27 @@
 import api from '../api/axios';
 
-export const getCart = async (customerId = 'me') => {
-  const { data } = await api.get(`/cart/${customerId}`);
-  return data.data;
+export const getCart = async (userId) => {
+  const { data } = await api.get(`/cart/${userId}`);
+  return data.data ?? data;
 };
 
-export const addToCart = async ({ menuItemId, quantity = 1 }) => {
+export const addToCart = async ({ menuItemId, quantity }) => {
   const { data } = await api.post('/cart/add', { menuItemId, quantity });
-  return data.data;
+  return data.data ?? data;
 };
 
 export const updateCartItem = async (menuItemId, quantity) => {
-  const { data } = await api.put(`/cart/update/${menuItemId}`, { quantity });
-  return data.data;
+  const { data } = await api.put(`/cart/item/${menuItemId}`, { quantity });
+  return data.data ?? data;
 };
 
 export const removeFromCart = async (menuItemId) => {
-  const { data } = await api.delete(`/cart/remove/${menuItemId}`);
-  return data.data;
+  const { data } = await api.delete(`/cart/item/${menuItemId}`);
+  return data.data ?? data;
 };
+
+export const clearCart = async () => {
+  const { data } = await api.delete('/cart');
+  return data.data ?? data;
+};
+

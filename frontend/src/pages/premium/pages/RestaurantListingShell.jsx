@@ -89,8 +89,7 @@ export default function RestaurantListingShell() {
       title="Restaurants"
       subtitle="Browse restaurants near you with premium filters."
     >
-      <PageLayout maxWidth="lg">
-        <div className="w-full flex flex-col gap-6">
+      <div className="w-full flex flex-col gap-6">
           <PremiumCard className="p-5 sm:p-6">
             <div className="flex flex-col md:flex-row gap-3 md:items-center">
               <div className="relative flex-1">
@@ -180,7 +179,6 @@ export default function RestaurantListingShell() {
             </PageLayout.Grid>
           ) : null}
         </div>
-      </PageLayout>
     </PremiumPageShell>
   );
 }

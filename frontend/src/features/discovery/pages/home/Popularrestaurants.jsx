@@ -1,11 +1,16 @@
 import { motion } from "framer-motion";
 import { Star, Clock, MapPin, Heart, Eye } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { staggerContainer, fadeUp, viewport } from "./animations";
 import { RESTAURANTS } from "./homeData";
 
-export default function PopularRestaurants() {
+export default function PopularRestaurants({ filterType = "all" }) {
   const [liked, setLiked] = useState([]);
+
+  const filteredRestaurants = useMemo(() => {
+    if (filterType === "all") return RESTAURANTS;
+    return RESTAURANTS.filter((r) => r.type === filterType);
+  }, [filterType]);
 
   const toggleLike = (id) => {
     setLiked((prev) =>
@@ -14,19 +19,19 @@ export default function PopularRestaurants() {
   };
 
   return (
-    <section id="restaurants" className="relative w-full py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+<section id="restaurants" className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12">
+      <div className="w-full max-w-7xl mx-auto flex flex-col gap-12">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
           variants={fadeUp}
-          className="text-center max-w-xl mb-16 sm:mb-20"
+          className="text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-4">
+          <span className="text-orange-500 uppercase font-bold text-xs tracking-wider block mb-2">
             Highly rated
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white">
+          </span>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white">
             Popular restaurants near you
           </h2>
         </motion.div>
@@ -36,9 +41,9 @@ export default function PopularRestaurants() {
           whileInView="visible"
           viewport={viewport}
           variants={staggerContainer(0.08)}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 w-full"
         >
-          {RESTAURANTS.map((res) => (
+          {filteredRestaurants.map((res) => (
             <motion.div
               key={res.id}
               variants={fadeUp}
@@ -81,7 +86,7 @@ export default function PopularRestaurants() {
                 </motion.button>
               </div>
 
-              <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1">
+              <div className="p-6 md:p-8 flex flex-col gap-3 flex-1">
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="text-sm font-semibold text-white leading-tight">

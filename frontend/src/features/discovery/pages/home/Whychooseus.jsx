@@ -41,8 +41,8 @@ export default function WhyChooseUs() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
   return (
-    <section ref={sectionRef} className="relative w-full py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
+<section ref={sectionRef} className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12">
+      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-center">
         {/* LEFT: illustration */}
         <motion.div
           initial="hidden"
@@ -71,10 +71,10 @@ export default function WhyChooseUs() {
           className="flex flex-col gap-8"
         >
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FF7A00] mb-3">
+            <span className="text-orange-500 uppercase font-bold text-xs tracking-wider block mb-2">
               Why choose us
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-white leading-tight">
+            </span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
               Trusted by diners across the country
             </h2>
             <p className="text-gray-400 mt-4 max-w-md leading-relaxed">

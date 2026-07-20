@@ -1,5 +1,6 @@
-import MarketingLayout from "../../../../components/layout/purpose/MarketingLayout";
-import PageLayout from "../../../../components/layout/PageLayout";
+import { useState } from "react";
+import AppLayout from "../../../../components/layout/AppLayout";
+import Footer from "../../../../components/layout/Footer/Footer";
 
 import Hero from "./Hero";
 import Features from "./Features";
@@ -12,28 +13,25 @@ import MobileApp from "./MobileApp";
 import CTA from "./Cta";
 
 export default function HomePage() {
-  return (
-    <MarketingLayout showFooter={true}>
-      <main className="bg-[#050505] text-white min-h-screen w-full justify-center overflow-x-hidden hide-scrollbar">
-        <PageLayout.Home>
-          <div className="flex flex-col gap-10 sm:gap-14 lg:gap-16">
-            <Hero />
+  const [searchMode, setSearchMode] = useState("order");
 
-            {/* Preserve module internals; only enforce premium section rhythm */}
-            <div className="pt-2 sm:pt-0">
-              <Features />
-            </div>
-            <PopularRestaurants />
-            <FoodCategories />
-            <HowItWorks />
-            <WhyChooseUs />
-            <Testimonials />
-            <MobileApp />
-            <CTA />
-          </div>
-        </PageLayout.Home>
-      </main>
-    </MarketingLayout>
+  const restaurantFilter =
+    searchMode === "order" ? "delivery" : "all";
+
+return (
+    <AppLayout>
+      <div className="w-full bg-black flex flex-col items-center">
+        <Hero searchMode={searchMode} setSearchMode={setSearchMode} />
+        <Features />
+        <PopularRestaurants filterType={restaurantFilter} />
+        <FoodCategories />
+        <HowItWorks />
+        <WhyChooseUs />
+        <Testimonials />
+        <MobileApp />
+        <CTA />
+        <Footer />
+      </div>
+    </AppLayout>
   );
 }
-

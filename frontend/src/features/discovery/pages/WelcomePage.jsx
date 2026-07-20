@@ -20,10 +20,10 @@ function WelcomePage() {
       <button
         type="button"
         onClick={() => navigate('/help')}
-        className="fixed bottom-10 right-10 w-16 h-16 bg-[#b23c00] text-white rounded-[22px] flex items-center justify-center shadow-2xl shadow-orange-900/40 hover:scale-110 transition-all z-[100]"
+        className="fixed bottom-6 right-6 w-12 h-12 bg-[#b23c00] text-white rounded-full flex items-center justify-center shadow-xl shadow-orange-900/40 hover:scale-110 transition-all z-[100]"
         aria-label="Help & support"
       >
-        <MessageSquareText size={30} fill="currentColor" fillOpacity={0.2} />
+        <MessageSquareText size={20} />
       </button>
     </MarketingLayout>
   );

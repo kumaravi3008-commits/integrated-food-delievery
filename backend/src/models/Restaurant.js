@@ -1,50 +1,74 @@
 const mongoose = require('mongoose');
 
-const RestaurantSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true, trim: true },
-    address: { type: String, required: true, trim: true },
-    phone: { type: String, trim: true, default: null },
-    status: { type: String, enum: ['ACTIVE', 'INACTIVE'], default: 'ACTIVE' },
-    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false, default: null },
+const menuItemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, default: '' },
+  price: { type: Number, required: true },
+  category: { type: String, default: '' },
+  image: { type: String, default: '' },
+}, { _id: false });
 
-    // Search & filtering support
-    cuisine: { type: String, trim: true, default: null },
-    rating: { type: Number, min: 0, default: null },
-
-    // Geospatial discovery support (Day 4)
-    // Stored as GeoJSON Point (longitude, latitude)
-    location: {
-      type: {
-        type: String,
-        enum: ['Point'],
-        default: 'Point',
-      },
-      coordinates: {
-        type: [Number],
-        // Keep creation backwards-compatible: existing createRestaurant calls may not provide location.
-        required: false,
-        validate: {
-          validator: function (v) {
-            // Allow undefined/null/missing coordinates.
-            if (v === undefined || v === null) return true;
-            return Array.isArray(v) && v.length === 2 && v.every((n) => Number.isFinite(n));
-          },
-          message: 'location.coordinates must be [longitude, latitude]',
-        },
-      },
-    },
-
+const restaurantSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Restaurant name is required'],
+    trim: true,
+    index: true,
   },
-  { timestamps: true }
-);
+  cuisine: {
+    type: [String],
+    required: [true, 'At least one cuisine type is required'],
+    index: true,
+  },
+  address: {
+    type: String,
+    trim: true,
+    default: '',
+  },
+  location: {
+    type: String,
+    trim: true,
+    default: '',
+    index: true,
+  },
+  rating: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5,
+  },
+  priceTier: {
+    type: String,
+    enum: ['$', '$$', '$$$', '$$$$'],
+    default: '$$',
+  },
+  etaMins: {
+    type: Number,
+    default: 30,
+  },
+  isOpen: {
+    type: Boolean,
+    default: true,
+  },
+  type: {
+    type: String,
+    enum: ['delivery', 'dine-in', 'both'],
+    default: 'delivery',
+    index: true,
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+  items: [menuItemSchema],
+}, {
+  timestamps: true,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+});
 
-// 2dsphere index for $geoNear
-RestaurantSchema.index({ location: '2dsphere' });
+// Text index for efficient full-text search across name, cuisine, and items
+restaurantSchema.index({ name: 'text', cuisine: 'text', 'items.name': 'text' });
 
-module.exports = mongoose.model('Restaurant', RestaurantSchema);
-
-
-
-
+module.exports = mongoose.model('Restaurant', restaurantSchema);
 

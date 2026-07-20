@@ -16,11 +16,11 @@ const PageContainer = ({
   return (
     <div
       className={cn(
-        'w-full mx-auto px-4 sm:px-6 lg:px-8',
+        'w-full mx-auto px-6 sm:px-8 lg:px-20',
         // Tailwind max-w mapping
         maxWidth === 'full' && 'max-w-full',
-        maxWidth === 'lg' && 'max-w-6xl',
-        maxWidth === 'xl' && 'max-w-7xl',
+        maxWidth === 'lg' && 'max-w-layout-full',
+        maxWidth === 'xl' && 'max-w-layout-full',
         maxWidth === '2xl' && 'max-w-3xl',
         maxWidth === '3xl' && 'max-w-3xl',
         maxWidth === '4xl' && 'max-w-4xl',

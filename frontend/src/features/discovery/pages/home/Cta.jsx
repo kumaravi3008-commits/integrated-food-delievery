@@ -4,8 +4,8 @@ import { fadeUp, viewport } from "./animations";
 
 export default function CTA() {
   return (
-    <section className="relative w-full py-16 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section className="w-full bg-black py-16 md:py-20 flex justify-center px-6 md:px-12">
+      <div className="w-full max-w-7xl mx-auto">
         <motion.div
           initial="hidden"
           whileInView="visible"

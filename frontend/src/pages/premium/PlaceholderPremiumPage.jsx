@@ -30,7 +30,7 @@ export default function PlaceholderPremiumPage({
         </div>
       );
     }
-    return <PageLayout.Centered maxWidth="lg">{placeholder}</PageLayout.Centered>;
+    return <div className="w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-20">{placeholder}</div>;
   })();
 
   return (

@@ -5,7 +5,7 @@ import Footer from './Footer/Footer';
 
 export default function AppLayout({ showFooter = false, children }) {
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+<div className="w-full min-h-screen bg-black text-white flex flex-col overflow-x-hidden">
       <AppNavbar />
       <main className="flex-1 w-full">{children || <Outlet />}</main>
       <CartDrawer />
