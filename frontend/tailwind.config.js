@@ -1,29 +1,35 @@
+import daisyui from "daisyui";
+
+/** @type {import('tailwindcss').Config} */
 export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        'curly': ['"Dancing Script"', 'cursive'],
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Space Grotesk", "system-ui", "sans-serif"],
-      },
-      maxWidth: {
-        'layout-sm': '48rem',
-        'layout-md': '56rem',
-        'layout-lg': '64rem',
-        'layout-xl': '72rem',
-        'layout-2xl': '80rem',
-        'layout-full': '1600px',
-      },
-      spacing: {
-        'gutter-xs': '1rem',
-        'gutter-sm': '2rem',
-        'gutter-lg': '5rem',
-      },
-      borderRadius: {
-        'card': '1.5rem',
-        'card-lg': '1.75rem',
-        'card-xl': '2rem',
+      colors: {
+        brand: {
+          orange: "#f97316",
+          dark: "#0f0f0f",
+        },
       },
     },
+  },
+  plugins: [daisyui],
+  daisyui: {
+    themes: [
+      {
+        dark: {
+          primary: "#f97316",         // Bright vibrant orange
+          "primary-focus": "#ea580c",   // Deeper orange on hover
+          secondary: "#fb923c",       // Soft orange accent
+          accent: "#fdba74",          // Warm highlight
+          neutral: "#1a1a1a",         // Dark panel/card background
+          "base-100": "#000000",      // Main background (pure black)
+          "base-200": "#0f0f0f",      // Secondary background (off-black)
+          "base-300": "#1f1f1f",      // Borders / overlays
+          "base-content": "#f3f4f6",  // Default text color (bright light gray)
+        },
+      },
+    ],
+    defaultTheme: "dark",
   },
 };
