@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900;
+}
+
+option {
+  @apply bg-gray-900 text-gray-200;
+}
+
+.footer-title {
+  @apply text-orange-500;
+}
+
+.btn-active {
+  @apply !bg-orange-100;
+}
+
+.input-bordered {
+  @apply border-orange-500 !important;
+}
+
+.input-primary:focus,
+.input-primary:focus-within {
+  @apply outline-orange-500 !important;
+}
+
+/* ReservationSystem.css */
+
+.reservation-system {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.seat-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.seat {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  /* Updated styling - Remove or update as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.selected {
+  /* Updated styling - Remove or update as needed */
+  @apply bg-orange-500;
+}
+
+.seat-number {
+  /* Updated styling - Remove or update as needed */
+  position: absolute;
+  bottom: -3px;
+  font-size: 12px;
+  color: #333;
+}
+
+.slider {
+  @apply w-full h-8;
+}
+
+.slider .slider-track {
+  @apply h-1.5 top-1/2 -translate-y-1/2 bg-gray-300;
+}
+
+.slider .slider-track.slider-track-1 {
+  @apply bg-orange-400;
+}
+
+.slider .slider-thumb {
+  @apply w-1.5 h-5 top-1/2 -translate-y-1/2 bg-orange-500 rounded-full text-center cursor-pointer transition duration-700;
+}
+
+.slider .slider-thumb.active {
+  @apply border-none outline-none;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+.float {
+  animation: float 4s infinite;
+}
+
+.reservationDatePicker .react-date-picker__wrapper,
+.reservationTimePicker .react-time-picker__wrapper {
+  @apply border-transparent border-b-orange-300;
+}
+
+.reservationDatePicker .react-date-picker__wrapper input,
+.reservationTimePicker .react-time-picker__wrapper input,
+.reservationTimePicker .react-time-picker__wrapper select {
+  @apply outline-none;
+}
+
+.reservationDatePickerCalender {
+  @apply !bg-gray-900 !border-black shadow-lg;
+}
+
+.reservationDatePickerCalender .react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  @apply !bg-black;
+}
+
+.reservationDatePickerCalender .react-calendar__navigation button:disabled {
+  @apply !bg-transparent text-transparent;
+}
+
+.reservationDatePickerCalender .react-calendar__tile {
+  @apply text-orange-200;
+}
+
+.reservationDatePickerCalender .react-calendar__tile--now {
+  @apply bg-transparent text-primary;
+}
+
+.reservationDatePickerCalender .react-calendar__tile:disabled {
+  @apply bg-transparent text-gray-500;
+}
+
+.reservationDatePickerCalender
+  .react-calendar__month-view__days__day--neighboringMonth {
+  @apply text-gray-400;
+}
+
+.reservationDatePickerCalender .react-calendar__tile--active {
+  @apply bg-primary;
+}
+
+.reservationDatePickerCalender
+  .react-calendar__tile--active.react-calendar__tile--now {
+  @apply bg-primary text-gray-200;
+}
+
+.reservationDatePickerCalender button:enabled:hover {
+  @apply bg-primary bg-opacity-70;
+}
+
+reservationDatePickerCalender .react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  @apply !bg-black;
+}
+
+.reservationDatePicker svg {
+  @apply !text-gray-500;
+}
+
+.Toastify__toast-icon > svg {
+  @apply fill-primary;
+}
+
+.glass {
+  background: rgb(255 255 255 / 80%);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
